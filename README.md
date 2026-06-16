@@ -147,8 +147,7 @@ function doPost(e) {
   sheet.appendRow(rowData);
   
   return ContentService.createTextOutput(JSON.stringify({ "result": "success", "sheetUsed": sheet.getName() }))
-                       .setMimeType(ContentService.MimeType.JSON)
-                       .setHeader("Access-Control-Allow-Origin", "*");
+                       .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet(e) {
