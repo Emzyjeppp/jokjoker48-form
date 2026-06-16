@@ -125,7 +125,26 @@ function doPost(e) {
       }
       rowData[i] = matchedValue !== "" ? matchedValue : "";
     }
+    sheet.appendRow(rowData);
   } else {
+    // Jika sheet kosong, buat baris header terlebih dahulu
+    var headerNames = [
+      "Timestamp",
+      "Email address",
+      "Sudah membaca deskripsi diatas?",
+      "Tipe akun",
+      "Nama",
+      "Kota",
+      "Email Akun JKT48 Pastikan diisi dengan benar !",
+      "Password Akun JKT48 Pastikan diisi dengan benar !",
+      "Nomor WhatsApp Aktif (Untuk Dihubungi)",
+      "2Shot Prioritas NAMA LENGKAP MEMBER - TEAM",
+      "2Shot Cadangan (kalau prioritas habis) NAMA LENGKAP MEMBER - TEAM",
+      "Penjoko",
+      "Keterangan"
+    ];
+    sheet.appendRow(headerNames);
+    
     // Susunan kolom default jika sheet kosong tanpa header
     rowData = [
       new Date(),
@@ -142,9 +161,8 @@ function doPost(e) {
       "",
       data.keterangan || ""
     ];
+    sheet.appendRow(rowData);
   }
-  
-  sheet.appendRow(rowData);
   
   return ContentService.createTextOutput(JSON.stringify({ "result": "success", "sheetUsed": sheet.getName() }))
                        .setMimeType(ContentService.MimeType.JSON);
