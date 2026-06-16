@@ -503,7 +503,7 @@ function setupEventListeners() {
 
     // Action clicks
     copyTextBtn.addEventListener("click", copyFormattedText);
-    submitWaBtn.addEventListener("click", sendToWhatsApp);
+    submitWaBtn.addEventListener("click", submitFormAndRedirect);
     downloadTicketBtn.addEventListener("click", downloadTicketImage);
 }
 
@@ -996,8 +996,8 @@ async function submitToGoogleSheet() {
     }
 }
 
-// Redirect user to WhatsApp with pre-filled details (and submit to sheet first)
-async function sendToWhatsApp() {
+// Submit data to sheet and redirect user to X profile
+async function submitFormAndRedirect() {
     const originalText = submitWaBtn.innerHTML;
     
     // Show sending state
@@ -1011,10 +1011,8 @@ async function sendToWhatsApp() {
     submitWaBtn.disabled = false;
     submitWaBtn.innerHTML = originalText;
     
-    // Open WhatsApp URL
-    const text = generateFormatString();
-    const encoded = encodeURIComponent(text);
-    const url = `https://wa.me/${WA_ADMIN_NUMBER}?text=${encoded}`;
+    // Open X profile URL
+    const url = "https://x.com/JokJoker48";
     window.open(url, '_blank');
 }
 
