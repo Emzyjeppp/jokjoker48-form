@@ -24,6 +24,44 @@ Formulir web premium interaktif untuk Jasa Joki 2-Shot JKT48 bernama **"JokJoker
 
 ---
 
+## 🔄 Alur Pengguna (UX Flow)
+
+Berikut adalah diagram alur pengalaman pengguna (user experience flow) dalam menggunakan web form pemesanan JokJoker48:
+
+```mermaid
+graph TD
+    A[Pengguna Buka Website] --> B{Layar Landing: Pilih Layanan}
+    B -- Joki 2-Shot --> C1[Formulir 2-Shot]
+    B -- Joki Meet & Greet --> C2[Formulir Meet & Greet]
+    B -- Joki Video Call --> C3[Formulir Video Call]
+    
+    C1 --> D1[Tampilkan Pilihan Kota <br>Jabodetabek / Jogja / Surabaya]
+    C2 --> D1
+    C3 --> D2[Sembunyikan Pilihan Kota <br>Kota Otomatis: ONLINE]
+    
+    D1 --> E[Isi Data & Pilihan Member <br>Dapat klik member di Pricelist untuk Auto-Fill]
+    D2 --> E
+    
+    E --> F[Preview Tiket Virtual Berubah Real-Time]
+    F --> G{Persetujuan & Validasi Form?}
+    G -- Belum Lengkap --> H[Tombol Aksi Dinonaktifkan]
+    G -- Ya --> I[Tombol Aksi Aktif]
+    
+    I --> J1[Salin Format Teks]
+    I --> J2[Unduh Tiket .PNG]
+    I --> J3[Kirim Form ke WhatsApp Admin <br>Data tersimpan ke Google Sheets]
+    
+    E --> K[Kembali ke Layar Pilihan Layanan <br>Mengosongkan form & pilihan]
+```
+
+### Rincian Alur UX:
+1. **Layar Landing (Layanan Joki)**: Pengguna memilih salah satu dari 3 jasa joki: **2-Shot**, **Meet & Greet**, atau **Video Call**.
+2. **Kondisional Kota**: Pada pemesanan *2-Shot* & *Meet & Greet*, form menampilkan dropdown kota (**Jabodetabek**, **Jogja**, dan **Surabaya**). Untuk *Video Call* (layanan virtual), kolom kota otomatis disembunyikan dan diatur ke `"ONLINE"`.
+3. **Pencarian & Auto-fill**: Pengguna bisa mencari nama member dan mengkliknya pada tabel pricelist dinamis untuk mengisi kolom Prioritas & Cadangan secara otomatis (bertumpuk).
+4. **Validasi & Aksi**: Tombol salin teks, unduh tiket, dan kirim WhatsApp hanya akan aktif setelah pengguna mencentang checkbox persetujuan ketentuan dan melengkapi data form.
+
+---
+
 ## 🛠️ Panduan Konfigurasi Google Sheets
 
 Agar form dapat mengirimkan data otomatis ke Google Spreadsheet Anda sebelum mengalihkan ke WhatsApp, ikuti langkah-langkah penyiapan di bawah ini:

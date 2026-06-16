@@ -58,7 +58,17 @@ const memberPricelist = [
     { name: "Mikaela Kusjanto", team: "Trainee", price: 75000 },
     { name: "Jemima Evodie", team: "Trainee", price: 85000 },
     { name: "Jacqueline Immanuela", team: "Trainee", price: 85000 },
-    { name: "Nur Intan", team: "Trainee", price: 85000 }
+    { name: "Nur Intan", team: "Trainee", price: 85000 },
+    { name: "Afera Thalia", team: "Trainee", price: 60000 },
+    { name: "Carissa Dini", team: "Trainee", price: 60000 },
+    { name: "Christabella Bonita", team: "Trainee", price: 60000 },
+    { name: "Fahira Putri", team: "Trainee", price: 60000 },
+    { name: "Fatimah Azzahra", team: "Trainee", price: 60000 },
+    { name: "Heidi Suyangga", team: "Trainee", price: 60000 },
+    { name: "Maxine Faye", team: "Trainee", price: 60000 },
+    { name: "Putry Jazyta", team: "Trainee", price: 60000 },
+    { name: "Ralyne Van Irwan", team: "Trainee", price: 60000 },
+    { name: "Sona Kalyana", team: "Trainee", price: 60000 }
 ];
 
 // Configuration
@@ -155,7 +165,17 @@ function getMemberPrice(member, service) {
                 "aurellia", "aurhel alana", "fritzy rosmerian", "grace octaviani", "michelle alexandra",
                 "fiony alveria", "gabriela abigail", "greesella adhalia", "gita sekar andarini", "freya jayawardana",
                 "cornelia vanisa", "kathrina irene", "mutiara azzahra", "astrella virgiananda", "mikaela kusjanto",
-                "jemima evodie"
+                "jemima evodie",
+                "afera thalia", "fera",
+                "carissa dini", "carissa",
+                "christabella bonita", "bella",
+                "fahira putri", "fahira",
+                "fatimah azzahra", "rara",
+                "heidi suyangga", "heidi",
+                "maxine faye", "maxine",
+                "putry jazyta", "jazzy",
+                "ralyne van irwan", "ralyne",
+                "sona kalyana", "sona"
             ],
             "70k": [
                 "hillary abigail", "adeline wijaya", "oline manuel", "marsha lenathea", "angelina christy",
