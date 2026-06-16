@@ -1,10 +1,10 @@
 /* Design System & Styling - JokJoker48 */
 :root {
-    --bg-primary: #120804;
-    --bg-secondary: #1a0f09;
-    --bg-card: rgba(28, 16, 10, 0.75);
-    --border-color: rgba(139, 90, 43, 0.25);
-    --border-hover: rgba(212, 175, 55, 0.5);
+    --bg-primary: #1e110b; /* Solid Warm Brown */
+    --bg-secondary: #26160e;
+    --bg-card: #2a1910; /* Solid Card Background */
+    --border-color: #3d2518;
+    --border-hover: #d4af37;
     
     --color-gold: #d4af37;
     --color-gold-light: #f3e5ab;
@@ -14,9 +14,7 @@
     --text-muted: #8e786b;
     --warning-red: #ff5e5e;
     
-    --shadow-gold: 0 0 15px rgba(212, 175, 55, 0.15);
-    --shadow-gold-heavy: 0 0 25px rgba(212, 175, 55, 0.3);
-    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.25);
     
     --font-heading: 'Cinzel', Georgia, serif;
     --font-body: 'Inter', sans-serif;
@@ -45,28 +43,9 @@ body {
     min-height: 100vh;
 }
 
-/* Background Glowing Effects */
+/* Background Glowing Effects - Hidden for Simple Theme */
 .glow-bg {
-    position: fixed;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(150px);
-    z-index: -1;
-    opacity: 0.15;
-    pointer-events: none;
-}
-
-.glow-1 {
-    background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%);
-    top: -100px;
-    left: -100px;
-}
-
-.glow-2 {
-    background: radial-gradient(circle, #8b5a2b 0%, transparent 70%);
-    bottom: -100px;
-    right: -100px;
+    display: none;
 }
 
 /* Container */
@@ -80,7 +59,7 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
@@ -90,13 +69,13 @@ body {
 
 .animate-fade-in {
     opacity: 0;
-    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Header */
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .logo-area {
@@ -108,53 +87,47 @@ body {
 }
 
 .logo-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--color-gold);
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
 .header h1 {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
-    font-weight: 900;
+    font-size: 3rem;
+    font-weight: 700;
     letter-spacing: 2px;
-    background: linear-gradient(135deg, #ffffff 0%, var(--color-gold-light) 50%, var(--color-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: var(--shadow-gold);
+    color: var(--color-gold);
 }
 
 .subtitle {
     font-family: var(--font-heading);
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    letter-spacing: 6px;
-    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
     font-weight: 700;
 }
 
 .header-divider {
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    width: 60px;
+    height: 2px;
+    background: var(--color-gold);
     margin: 0 auto;
 }
 
-/* Cards (Glassmorphism) */
+/* Cards (Simple Solid) */
 .card {
     background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 2rem;
     margin-bottom: 2rem;
     box-shadow: var(--shadow-card);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.2s ease;
 }
 
 .card:hover {
-    border-color: rgba(212, 175, 55, 0.15);
+    border-color: var(--border-hover);
 }
 
 .card-header {
@@ -341,14 +314,14 @@ body {
 
 .input-group input, 
 .input-group select {
-    background: rgba(0, 0, 0, 0.45);
+    background: #170b05;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0.85rem 1rem;
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 0.95rem;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     width: 100%;
 }
 
@@ -360,8 +333,7 @@ body {
 .input-group select:focus {
     outline: none;
     border-color: var(--color-gold);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    background: rgba(0, 0, 0, 0.6);
+    background: #0d0502;
 }
 
 .input-note {
@@ -764,26 +736,19 @@ body {
     display: flex;
     justify-content: center;
     margin: 2rem 0;
-    perspective: 1000px;
 }
 
 .virtual-ticket {
     width: 100%;
     max-width: 650px;
     height: 220px;
-    background: radial-gradient(circle at top left, #2c1a11 0%, #170d08 100%);
-    border: 2px solid var(--color-gold-dark);
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.1);
+    background: #170d08;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-card);
     display: flex;
     position: relative;
     overflow: hidden;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-
-.virtual-ticket:hover {
-    transform: rotateY(3deg) rotateX(1deg) translateY(-5px);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.2);
 }
 
 /* Ticket Side Notch shapes */
@@ -801,12 +766,12 @@ body {
 
 .notch-top {
     top: -15px;
-    border-bottom: 2px solid var(--color-gold-dark);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .notch-bottom {
     bottom: -15px;
-    border-top: 2px solid var(--color-gold-dark);
+    border-top: 1px solid var(--border-color);
 }
 
 /* Ticket Left Side (72% width) */
@@ -1025,26 +990,25 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
-    color: #120804;
+    background: var(--color-gold);
+    color: #1e110b;
     border: none;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:not(:disabled):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    transform: translateY(-1px);
+    background: var(--color-gold-light);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.02);
+    background: #1e110b;
     color: var(--text-primary);
     border: 1px solid var(--border-color);
 }
 
 .btn-secondary:not(:disabled):hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: #26160e;
     border-color: var(--color-gold);
     color: var(--color-gold);
 }
