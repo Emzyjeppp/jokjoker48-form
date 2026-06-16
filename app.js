@@ -90,6 +90,7 @@ const ticketBackupLabel = document.getElementById("ticketBackupLabel");
 const disclaimerServiceType = document.getElementById("disclaimerServiceType");
 const pricelistTitleText = document.getElementById("pricelistTitleText");
 const priceLegendContainer = document.getElementById("priceLegendContainer");
+const cityInputGroup = document.getElementById("cityInputGroup");
 
 // Form Inputs
 const userNameInput = document.getElementById("userName");
@@ -490,6 +491,16 @@ function setupEventListeners() {
 function selectService(service) {
     selectedService = service;
     
+    // Toggle City field based on service
+    if (service === "videocall") {
+        if (cityInputGroup) cityInputGroup.style.display = "none";
+        cityInput.removeAttribute("required");
+        cityInput.value = "";
+    } else {
+        if (cityInputGroup) cityInputGroup.style.display = "flex";
+        cityInput.setAttribute("required", "");
+    }
+    
     // Update UI headers and labels dynamically
     if (service === "twoshot") {
         formTitleText.textContent = "Formulir Pemesanan Joki 2-Shot";
@@ -726,7 +737,7 @@ function selectMember(member) {
 
 // Update the Virtual Ticket Mockup Visuals
 function updateTicketPreview() {
-    ticketCity.textContent = cityInput.value ? cityInput.value.toUpperCase() : "NAMA KOTA";
+    ticketCity.textContent = (selectedService === "videocall") ? "ONLINE" : (cityInput.value ? cityInput.value.toUpperCase() : "NAMA KOTA");
     ticketAccountType.textContent = accountTypeInput.value ? accountTypeInput.value.toUpperCase() : "TIPE AKUN";
     
     // Collect all priorities
@@ -825,7 +836,7 @@ function generateFormatString() {
     const emailVal = personalEmailInput.value;
     const isAgreed = agreeCheckbox.checked ? "Sudah" : "Belum";
     const accountType = accountTypeInput.value;
-    const city = cityInput.value;
+    const city = (selectedService === "videocall") ? "ONLINE" : cityInput.value;
     const jkt48Email = jkt48EmailInput.value;
     const jkt48Password = jkt48PasswordInput.value;
     const waNumber = whatsappInput.value;
@@ -876,14 +887,18 @@ function generateFormatString() {
     
     const serviceUpper = serviceName.toUpperCase();
 
+    let cityLine = "";
+    if (selectedService !== "videocall") {
+        cityLine = `• *Nama Kota:* ${city}\n`;
+    }
+
     return `*FORM JOKI JOKER48 - ${serviceUpper}*
 ----------------------------------------
 • *Nama Lengkap:* ${userName}
 • *Email address:* ${emailVal}
 • *Sudah membaca deskripsi:* ${isAgreed}
 • *Tipe akun:* ${accountType}
-• *Nama Kota:* ${city}
-• *Email Akun JKT48:* ${jkt48Email}
+${cityLine}• *Email Akun JKT48:* ${jkt48Email}
 • *Password Akun JKT48:* ${jkt48Password}
 • *Nomor WhatsApp:* ${waNumber}
 
@@ -936,7 +951,7 @@ async function submitToGoogleSheet() {
         agree: agreeCheckbox.checked ? "Sudah" : "Belum",
         accountType: accountTypeInput.value,
         userName: userNameInput.value,
-        city: cityInput.value,
+        city: selectedService === "videocall" ? "ONLINE" : cityInput.value,
         jkt48Email: jkt48EmailInput.value,
         jkt48Password: jkt48PasswordInput.value,
         whatsapp: whatsappInput.value,
@@ -1063,7 +1078,7 @@ function downloadTicketImage() {
         ctx.fillText(valText, x, y + 28);
     };
     
-    const cityVal = cityInput.value ? cityInput.value.toUpperCase() : "-";
+    const cityVal = selectedService === "videocall" ? "ONLINE" : (cityInput.value ? cityInput.value.toUpperCase() : "-");
     const typeVal = accountTypeInput.value ? accountTypeInput.value.toUpperCase() : "-";
     
     // Collect priorities for drawing

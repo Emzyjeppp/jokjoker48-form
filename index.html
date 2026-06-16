@@ -157,9 +157,14 @@
                         </div>
 
                         <!-- City -->
-                        <div class="input-group">
+                        <div class="input-group" id="cityInputGroup">
                             <label for="city"><i class="fa-solid fa-city"></i> Nama Kota</label>
-                            <input type="text" id="city" placeholder="Contoh: Jakarta" required>
+                            <select id="city" required>
+                                <option value="" disabled selected>Pilih Kota</option>
+                                <option value="Jabodetabek">Jabodetabek</option>
+                                <option value="Jogja">Jogja</option>
+                                <option value="Surabaya">Surabaya</option>
+                            </select>
                         </div>
                     </div>
 
