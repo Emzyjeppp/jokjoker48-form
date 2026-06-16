@@ -88,6 +88,8 @@ const ticketTitleText = document.getElementById("ticketTitleText");
 const ticketPriorityLabel = document.getElementById("ticketPriorityLabel");
 const ticketBackupLabel = document.getElementById("ticketBackupLabel");
 const disclaimerServiceType = document.getElementById("disclaimerServiceType");
+const pricelistTitleText = document.getElementById("pricelistTitleText");
+const priceLegendContainer = document.getElementById("priceLegendContainer");
 
 // Form Inputs
 const userNameInput = document.getElementById("userName");
@@ -176,6 +178,37 @@ function getMemberPrice(member, service) {
         return 40000;
     }
     return null;
+}
+
+// Update price legend based on active service
+function updatePriceLegend() {
+    if (!priceLegendContainer) return;
+    
+    if (selectedService === "twoshot") {
+        priceLegendContainer.innerHTML = `
+            <span class="legend-item"><span class="legend-color tier-green"></span> Rp 60K</span>
+            <span class="legend-item"><span class="legend-color tier-purple"></span> Rp 75K</span>
+            <span class="legend-item"><span class="legend-color tier-orange"></span> Rp 85K</span>
+            <span class="legend-item"><span class="legend-color tier-pink"></span> Rp 100K</span>
+            <span class="legend-item"><span class="legend-color tier-grey"></span> Tanya Admin</span>
+        `;
+    } else if (selectedService === "mng") {
+        priceLegendContainer.innerHTML = `
+            <span class="legend-item"><span class="legend-color tier-green"></span> Rp 25K</span>
+            <span class="legend-item"><span class="legend-color tier-purple"></span> Rp 30K</span>
+            <span class="legend-item"><span class="legend-color tier-orange"></span> Rp 40K</span>
+            <span class="legend-item"><span class="legend-color tier-pink"></span> Rp 50K</span>
+            <span class="legend-item"><span class="legend-color tier-grey"></span> Tanya Admin</span>
+        `;
+    } else if (selectedService === "videocall") {
+        priceLegendContainer.innerHTML = `
+            <span class="legend-item"><span class="legend-color tier-green"></span> Rp 40K</span>
+            <span class="legend-item"><span class="legend-color tier-purple"></span> Rp 45K</span>
+            <span class="legend-item"><span class="legend-color tier-orange"></span> Rp 70K</span>
+            <span class="legend-item"><span class="legend-color tier-pink"></span> Rp 85K</span>
+            <span class="legend-item"><span class="legend-color tier-grey"></span> Tanya Admin</span>
+        `;
+    }
 }
 
 // Populate dropdown options on load
@@ -468,6 +501,7 @@ function selectService(service) {
         ticketPriorityLabel.textContent = "PRIORITAS 2-SHOT";
         ticketBackupLabel.textContent = "CADANGAN 2-SHOT";
         disclaimerServiceType.textContent = "2-Shot";
+        pricelistTitleText.textContent = "Pricelist Joki 2-Shot";
         
         addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
         addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
@@ -481,6 +515,7 @@ function selectService(service) {
         ticketPriorityLabel.textContent = "PRIORITAS MnG";
         ticketBackupLabel.textContent = "CADANGAN MnG";
         disclaimerServiceType.textContent = "Meet & Greet";
+        pricelistTitleText.textContent = "Pricelist Joki Meet & Greet";
         
         addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
         addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
@@ -494,6 +529,7 @@ function selectService(service) {
         ticketPriorityLabel.textContent = "PRIORITAS VIDEO CALL";
         ticketBackupLabel.textContent = "CADANGAN VIDEO CALL";
         disclaimerServiceType.textContent = "Video Call";
+        pricelistTitleText.textContent = "Pricelist Joki Video Call";
         
         addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
         addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
@@ -504,6 +540,7 @@ function selectService(service) {
     bookingFormScreen.style.display = "block";
     
     // Run setup and populating logic for this service
+    updatePriceLegend();
     populateDropdowns();
     renderPricelist();
     updateTicketPreview();
@@ -591,6 +628,16 @@ function renderPricelist() {
                 priceLabel = `Rp ${(activePrice / 1000)}K`;
                 if (selectedService === "twoshot") {
                     priceClass = `price-tag-${activePrice / 1000}k`;
+                } else if (selectedService === "mng") {
+                    if (activePrice === 25000) priceClass = "price-tag-60k";
+                    else if (activePrice === 30000) priceClass = "price-tag-75k";
+                    else if (activePrice === 40000) priceClass = "price-tag-85k";
+                    else if (activePrice === 50000) priceClass = "price-tag-100k";
+                } else if (selectedService === "videocall") {
+                    if (activePrice === 40000) priceClass = "price-tag-60k";
+                    else if (activePrice === 45000) priceClass = "price-tag-75k";
+                    else if (activePrice === 70000) priceClass = "price-tag-85k";
+                    else if (activePrice === 85000) priceClass = "price-tag-100k";
                 }
             }
             
