@@ -999,8 +999,12 @@
                 let timeStr = "-";
                 if (booking.timestamp) {
                     const d = new Date(booking.timestamp);
-                    timeStr = d.toLocaleDateString("id-ID", { day: 'numeric', month: 'short' }) + " " + 
-                              d.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+                    if (!isNaN(d.getTime())) {
+                        timeStr = d.toLocaleDateString("id-ID", { day: 'numeric', month: 'short' }) + " " + 
+                                  d.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+                    } else {
+                        timeStr = String(booking.timestamp);
+                    }
                 }
 
                 // Service Badge class mapping
