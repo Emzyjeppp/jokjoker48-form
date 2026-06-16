@@ -1156,3 +1156,14 @@ body {
 .service-select-card:hover .select-service-btn {
     background: var(--color-gold-light);
 }
+
+.footer-admin-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-admin-link:hover {
+    color: var(--color-gold);
+}

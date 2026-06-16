@@ -169,6 +169,42 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  var action = e.parameter.action;
+  
+  if (action === "getData") {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheets = ["2-Shot", "Meet & Greet", "Video Call"];
+    var allData = {};
+    
+    for (var s = 0; s < sheets.length; s++) {
+      var sheetName = sheets[s];
+      var sheet = spreadsheet.getSheetByName(sheetName);
+      if (sheet) {
+        var dataRange = sheet.getDataRange();
+        var values = dataRange.getValues();
+        if (values.length > 1) {
+          var headers = values[0];
+          var rows = [];
+          for (var r = 1; r < values.length; r++) {
+            var rowObj = {};
+            for (var c = 0; c < headers.length; c++) {
+              rowObj[headers[c]] = values[r][c];
+            }
+            rows.push(rowObj);
+          }
+          allData[sheetName] = rows;
+        } else {
+          allData[sheetName] = [];
+        }
+      } else {
+        allData[sheetName] = [];
+      }
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({ "result": "success", "data": allData }))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+  
   return ContentService.createTextOutput("Script running successfully. Use POST method to submit data.");
 }
 ```
