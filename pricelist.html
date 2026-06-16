@@ -90,8 +90,14 @@
 
         .twoshot-price-grid, .mng-price-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .twoshot-price-grid, .mng-price-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         .team-table-card {
