@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JokJoker48 - Jasa Joki 2-Shot JKT48</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header animate-fade-in">
+            <div class="logo-area">
+                <i class="fa-solid fa-mask-joker logo-icon"></i>
+                <h1>JokJoker48</h1>
+            </div>
+            <p class="subtitle">PREMIUM JKT48 2-SHOT JOCKEY SERVICE</p>
+            <div class="header-divider"></div>
+        </header>
+
+        <!-- Terms & Rules Section -->
+        <section class="rules-section card animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="card-header">
+                <i class="fa-solid fa-scroll card-icon"></i>
+                <h2>Ketentuan & Deskripsi Jasa Joki</h2>
+            </div>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <span class="rule-num">01</span>
+                    <p><strong>AKUN WAJIB DI-LOGOUT</strong> saat sesi war tiket dimulai.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">02</span>
+                    <p>Pastikan Anda <strong>sudah top up JKT48 Point</strong> sesuai nominal tiket.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">03</span>
+                    <p>Pembayaran joki dapat dilakukan <strong>setelah tiket 2-Shot berhasil didapatkan</strong>.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">04</span>
+                    <p>Jika member prioritas habis, pesanan otomatis <strong>dialihkan ke member cadangan/alternatif</strong>.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">05</span>
+                    <p>Selama war berlangsung, Anda <strong>dilarang keras membuka/login</strong> ke akun JKT48 Anda.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">06</span>
+                    <p><strong>Dilarang joki di tempat lain</strong> setelah mengisi formulir ini untuk menghindari bentrok.</p>
+                </div>
+            </div>
+            <div class="checkbox-container">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="agreeCheckbox">
+                    <span class="checkmark"></span>
+                    Saya telah membaca, memahami, dan menyetujui seluruh ketentuan di atas.
+                </label>
+            </div>
+        </section>
+
+        <!-- Main Content Grid (Form & Pricelist) -->
+        <div class="main-grid">
+            <!-- Form Card -->
+            <section class="form-section card animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <i class="fa-solid fa-pen-to-square card-icon"></i>
+                    <h2>Formulir Pemesanan</h2>
+                </div>
+                
+                <form id="jokiForm" onsubmit="return false;">
+                    <div class="form-row">
+                        <!-- User Name -->
+                        <div class="input-group">
+                            <label for="userName"><i class="fa-solid fa-user"></i> Nama Lengkap Anda</label>
+                            <input type="text" id="userName" placeholder="Contoh: Jefry" required>
+                        </div>
+
+                        <!-- Personal Email -->
+                        <div class="input-group">
+                            <label for="personalEmail"><i class="fa-solid fa-envelope"></i> Email Address (Personal)</label>
+                            <input type="email" id="personalEmail" placeholder="nama@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Account Type -->
+                        <div class="input-group">
+                            <label for="accountType"><i class="fa-solid fa-id-card"></i> Tipe Akun JKT48</label>
+                            <select id="accountType" required>
+                                <option value="" disabled selected>Pilih tipe akun</option>
+                                <option value="Official Fan Club (OFC)">Official Fan Club (OFC)</option>
+                                <option value="Free Account">Free Account / Biasa</option>
+                            </select>
+                        </div>
+
+                        <!-- City -->
+                        <div class="input-group">
+                            <label for="city"><i class="fa-solid fa-city"></i> Nama Kota</label>
+                            <input type="text" id="city" placeholder="Contoh: Jakarta" required>
+                        </div>
+                    </div>
+
+                    <!-- JKT48 Account Credentials -->
+                    <div class="input-group highlight-input">
+                        <label for="jkt48Email"><i class="fa-solid fa-circle-user"></i> Email Akun JKT48</label>
+                        <input type="email" id="jkt48Email" placeholder="email.akun@jkt48.com" required>
+                        <span class="input-note warning"><i class="fa-solid fa-triangle-exclamation"></i> Pastikan diisi dengan benar !</span>
+                    </div>
+
+                    <div class="input-group highlight-input">
+                        <label for="jkt48Password"><i class="fa-solid fa-key"></i> Password Akun JKT48</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="jkt48Password" placeholder="••••••••" required>
+                            <button type="button" id="togglePasswordBtn" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <span class="input-note warning"><i class="fa-solid fa-triangle-exclamation"></i> Pastikan diisi dengan benar !</span>
+                    </div>
+
+                    <!-- WhatsApp Number -->
+                    <div class="input-group">
+                        <label for="whatsapp"><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp Aktif</label>
+                        <input type="tel" id="whatsapp" placeholder="Contoh: 081234567890" required>
+                        <span class="input-note">Digunakan untuk menghubungi jika berhasil didapatkan</span>
+                    </div>
+
+                    <!-- 2Shot Selection -->
+                    <div class="twoshot-selection-box">
+                        <div class="box-title">Pemilihan Member 2-Shot</div>
+                        <p class="box-desc">Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau ketik manual di bawah.</p>
+                        
+                        <div class="input-group">
+                            <label for="priorityMember"><i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas 1</label>
+                            <select id="priorityMember" required>
+                                <option value="" disabled selected>Pilih Member Prioritas 1</option>
+                            </select>
+                        </div>
+
+                        <!-- Container untuk member prioritas tambahan -->
+                        <div id="additionalPrioritiesContainer"></div>
+
+                        <button type="button" class="btn-add-member" id="addPriorityBtn" style="margin-bottom: 1.5rem;">
+                            <i class="fa-solid fa-plus"></i> Tambah Member Prioritas
+                        </button>
+
+                        <div class="input-group">
+                            <label for="backupMember"><i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan 1 (Alternatif)</label>
+                            <select id="backupMember" required>
+                                <option value="" disabled selected>Pilih Member Cadangan 1 (Alternatif)</option>
+                            </select>
+                        </div>
+
+                        <!-- Container untuk member cadangan tambahan -->
+                        <div id="additionalBackupsContainer"></div>
+
+                        <button type="button" class="btn-add-member" id="addBackupBtn">
+                            <i class="fa-solid fa-plus"></i> Tambah Member Cadangan
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Pricelist Card -->
+            <section class="pricelist-section card animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="card-header pricelist-header-layout">
+                    <div>
+                        <i class="fa-solid fa-tags card-icon"></i>
+                        <h2>Pricelist Joki 2-Shot</h2>
+                    </div>
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="memberSearch" placeholder="Cari nama member...">
+                    </div>
+                </div>
+
+                <div class="price-legend">
+                    <span class="legend-item"><span class="legend-color tier-green"></span> Rp 60K</span>
+                    <span class="legend-item"><span class="legend-color tier-purple"></span> Rp 75K</span>
+                    <span class="legend-item"><span class="legend-color tier-orange"></span> Rp 85K</span>
+                    <span class="legend-item"><span class="legend-color tier-pink"></span> Rp 100K</span>
+                    <span class="legend-item"><span class="legend-color tier-grey"></span> Tanya Admin</span>
+                </div>
+
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-team="all">Semua</button>
+                    <button class="tab-btn" data-team="Love">Team Love</button>
+                    <button class="tab-btn" data-team="Dream">Team Dream</button>
+                    <button class="tab-btn" data-team="Passion">Team Passion</button>
+                    <button class="tab-btn" data-team="Trainee">Trainee</button>
+                </div>
+
+                <div class="pricelist-container" id="pricelistContent">
+                    <!-- Dynamic member list will be generated by app.js -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Virtual Ticket & Submit Section -->
+        <section class="ticket-section card animate-fade-in" style="animation-delay: 0.4s;">
+            <div class="card-header">
+                <i class="fa-solid fa-ticket card-icon text-gold"></i>
+                <h2>Virtual Joki Ticket Preview</h2>
+            </div>
+            
+            <div class="ticket-wrapper">
+                <!-- Golden/Chocolate Ticket Mockup -->
+                <div class="virtual-ticket" id="virtualTicket">
+                    <div class="ticket-left">
+                        <div class="ticket-brand">JOKJOKER48</div>
+                        <div class="ticket-title">JOKI 2-SHOT TICKET</div>
+                        <div class="ticket-details-grid">
+                            <div class="detail-cell">
+                                <span class="detail-lbl">NAMA KOTA</span>
+                                <span class="detail-val" id="ticketCity">-</span>
+                            </div>
+                            <div class="detail-cell">
+                                <span class="detail-lbl">TIPE AKUN</span>
+                                <span class="detail-val" id="ticketAccountType">-</span>
+                            </div>
+                            <div class="detail-cell colspan-2">
+                                <span class="detail-lbl">PRIORITAS 2-SHOT</span>
+                                <span class="detail-val text-highlight-gold" id="ticketPriority">-</span>
+                            </div>
+                            <div class="detail-cell colspan-2">
+                                <span class="detail-lbl">CADANGAN 2-SHOT</span>
+                                <span class="detail-val" id="ticketBackup">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket-right">
+                        <div class="ticket-price-badge">
+                            <span class="price-lbl">ESTIMASI BIAYA</span>
+                            <span class="price-val" id="ticketPrice">Rp 0</span>
+                        </div>
+                        <div class="ticket-status-stamp">PENDING</div>
+                        <div class="ticket-barcode-area">
+                            <div class="barcode"></div>
+                            <span class="barcode-text">JOKER48-WAR-TICKET</span>
+                        </div>
+                    </div>
+                    <!-- Decorative ticket notches -->
+                    <div class="notch notch-top"></div>
+                    <div class="notch notch-bottom"></div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="submit-actions">
+                <button type="button" class="action-btn btn-secondary" id="copyTextBtn" disabled>
+                    <i class="fa-solid fa-copy"></i> Salin Format Teks
+                </button>
+                <button type="button" class="action-btn btn-secondary" id="downloadTicketBtn" disabled>
+                    <i class="fa-solid fa-download"></i> Unduh Tiket (.PNG)
+                </button>
+                <button type="button" class="action-btn btn-primary" id="submitWaBtn" disabled>
+                    <i class="fa-brands fa-whatsapp"></i> Kirim Form ke WhatsApp Admin
+                </button>
+            </div>
+            <p class="submit-disclaimer"><i class="fa-solid fa-lock"></i> Data kredensial akun Anda aman dan hanya digunakan untuk kepentingan pemesanan tiket 2-Shot oleh Admin JokJoker48.</p>
+        </section>
+
+        <!-- Hidden canvas for ticket image generation -->
+        <canvas id="ticketCanvas" style="display: none;"></canvas>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast">
+            <span id="toastMessage">Pesan Notifikasi</span>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 JokJoker48. Hak Cipta Dilindungi.</p>
+            <p class="footer-note">Web ini dibuat khusus untuk mempermudah pemesanan jasa joki 2-Shot JKT48.</p>
+        </footer>
+    </div>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
