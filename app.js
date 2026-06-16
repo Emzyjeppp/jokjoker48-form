@@ -72,6 +72,23 @@ const pricelistContent = document.getElementById("pricelistContent");
 const memberSearch = document.getElementById("memberSearch");
 const tabButtons = document.querySelectorAll(".tab-btn");
 
+// Screen Containers
+const serviceSelectorScreen = document.getElementById("serviceSelectorScreen");
+const bookingFormScreen = document.getElementById("bookingFormScreen");
+const backToSelectorBtn = document.getElementById("backToSelectorBtn");
+const serviceSelectCards = document.querySelectorAll(".service-select-card");
+
+// Dynamic Text Elements
+const formTitleText = document.getElementById("formTitleText");
+const selectionBoxTitle = document.getElementById("selectionBoxTitle");
+const selectionBoxDesc = document.getElementById("selectionBoxDesc");
+const priorityLabel = document.getElementById("priorityLabel");
+const backupLabel = document.getElementById("backupLabel");
+const ticketTitleText = document.getElementById("ticketTitleText");
+const ticketPriorityLabel = document.getElementById("ticketPriorityLabel");
+const ticketBackupLabel = document.getElementById("ticketBackupLabel");
+const disclaimerServiceType = document.getElementById("disclaimerServiceType");
+
 // Form Inputs
 const userNameInput = document.getElementById("userName");
 const personalEmailInput = document.getElementById("personalEmail");
@@ -104,18 +121,76 @@ const downloadTicketBtn = document.getElementById("downloadTicketBtn");
 const submitWaBtn = document.getElementById("submitWaBtn");
 
 // Active state values
+let selectedService = "twoshot"; // default
 let currentTeamFilter = "all";
 let searchKeyword = "";
 let estimatedPrice = 0;
 
+// Helper to determine member price based on active service
+function getMemberPrice(member, service) {
+    if (service === "twoshot") {
+        return member.price;
+    } else if (service === "mng") {
+        if (member.price === 60000) return 25000;
+        if (member.price === 75000) return 30000;
+        if (member.price === 85000) return 40000;
+        if (member.price === 100000) return 50000;
+        return null;
+    } else if (service === "videocall") {
+        const name = member.name.toLowerCase();
+        
+        const vcTiers = {
+            "40k": [
+                "alya amanda", "anindya ramadhani", "celine thefani", "nayla suji", "cathleen nixie",
+                "cynthia yaputera", "indah cahya", "jazzlyn trisha", "helisma putri", "gendis mayranisa",
+                "jesslyn elly", "shabilqis nalia", "nina tutachia", "febriola sinambela", "dena natalia",
+                "desy natalia", "lulu salsabila", "raisha syifa", "ribka budiman", "victoria kimberly",
+                "michelle levia", "jessica chandra", "feni fitriyanti", "aulia riiza", "aulia riza", "bong aprili",
+                "hagia sopia", "humaira ramadhani"
+            ],
+            "45k": [
+                "aurellia", "aurhel alana", "fritzy rosmerian", "grace octaviani", "michelle alexandra",
+                "fiony alveria", "gabriela abigail", "greesella adhalia", "gita sekar andarini", "freya jayawardana",
+                "cornelia vanisa", "kathrina irene", "mutiara azzahra", "astrella virgiananda", "mikaela kusjanto",
+                "jemima evodie"
+            ],
+            "70k": [
+                "hillary abigail", "adeline wijaya", "oline manuel", "marsha lenathea", "angelina christy",
+                "jacqueline immanuela", "nur intan"
+            ],
+            "85k": [
+                "abigail rachel", "catherine valencia"
+            ]
+        };
+        
+        if (vcTiers["40k"].some(n => name.includes(n))) return 40000;
+        if (vcTiers["45k"].some(n => name.includes(n))) return 45000;
+        if (vcTiers["70k"].some(n => name.includes(n))) return 70000;
+        if (vcTiers["85k"].some(n => name.includes(n))) return 85000;
+        
+        // Default fallback if not found in specific lists
+        if (member.price === 60000) return 40000;
+        if (member.price === 75000) return 45000;
+        if (member.price === 85000) return 45000;
+        if (member.price === 100000) return 70000;
+        return 40000;
+    }
+    return null;
+}
+
 // Populate dropdown options on load
 function populateDropdowns() {
-    priorityInput.innerHTML = '<option value="" disabled selected>Pilih Member Prioritas 1</option><option value="">-- Kosongkan Pilihan --</option>';
-    backupInput.innerHTML = '<option value="" disabled selected>Pilih Member Cadangan 1 (Alternatif)</option><option value="">-- Kosongkan Pilihan --</option>';
+    let prefix = "2Shot";
+    if (selectedService === "mng") prefix = "MnG";
+    if (selectedService === "videocall") prefix = "VC";
+
+    priorityInput.innerHTML = `<option value="" disabled selected>Pilih Member Prioritas 1</option><option value="">-- Kosongkan Pilihan --</option>`;
+    backupInput.innerHTML = `<option value="" disabled selected>Pilih Member Cadangan 1 (Alternatif)</option><option value="">-- Kosongkan Pilihan --</option>`;
     
     memberPricelist.forEach(member => {
         const optionVal = `${member.name} - ${member.team}`;
-        const priceLabel = member.price ? ` - Rp ${(member.price / 1000)}K` : ' - Tanya Admin';
+        const activePrice = getMemberPrice(member, selectedService);
+        const priceLabel = activePrice ? ` - Rp ${(activePrice / 1000)}K` : ' - Tanya Admin';
         const optionText = `${member.name} (${member.team})${priceLabel}`;
         
         const opt1 = document.createElement("option");
@@ -132,12 +207,16 @@ function populateDropdowns() {
 
 // Update Priority Labels re-sequencing
 function updatePriorityLabels() {
+    let prefix = "2Shot";
+    if (selectedService === "mng") prefix = "MnG";
+    if (selectedService === "videocall") prefix = "VC";
+
     const rows = additionalPrioritiesContainer.querySelectorAll(".dynamic-member-row");
     rows.forEach((row, index) => {
         const label = row.querySelector("label");
         const select = row.querySelector("select");
         const num = index + 2;
-        label.innerHTML = `<i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas ${num}`;
+        label.innerHTML = `<i class="fa-solid fa-star text-gold"></i> ${prefix} Prioritas ${num}`;
         select.id = `priorityMember_${num}`;
         const firstOpt = select.querySelector("option[disabled]");
         if (firstOpt) {
@@ -151,13 +230,17 @@ function addAdditionalPriority(initialValue = "") {
     const rowCount = additionalPrioritiesContainer.querySelectorAll(".dynamic-member-row").length;
     const num = rowCount + 2;
     
+    let prefix = "2Shot";
+    if (selectedService === "mng") prefix = "MnG";
+    if (selectedService === "videocall") prefix = "VC";
+
     const row = document.createElement("div");
     row.className = "dynamic-member-row animate-fade-in";
     row.style.animationDuration = "0.3s";
     
     row.innerHTML = `
         <div class="input-group">
-            <label for="priorityMember_${num}"><i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas ${num}</label>
+            <label for="priorityMember_${num}"><i class="fa-solid fa-star text-gold"></i> ${prefix} Prioritas ${num}</label>
             <select id="priorityMember_${num}" required>
                 <option value="" disabled selected>Pilih Member Prioritas ${num}</option>
                 <option value="">-- Kosongkan Pilihan --</option>
@@ -171,7 +254,8 @@ function addAdditionalPriority(initialValue = "") {
     const select = row.querySelector("select");
     memberPricelist.forEach(member => {
         const optionVal = `${member.name} - ${member.team}`;
-        const priceLabel = member.price ? ` - Rp ${(member.price / 1000)}K` : ' - Tanya Admin';
+        const activePrice = getMemberPrice(member, selectedService);
+        const priceLabel = activePrice ? ` - Rp ${(activePrice / 1000)}K` : ' - Tanya Admin';
         const optionText = `${member.name} (${member.team})${priceLabel}`;
         
         const opt = document.createElement("option");
@@ -206,12 +290,16 @@ function addAdditionalPriority(initialValue = "") {
 
 // Update Backup Labels re-sequencing
 function updateBackupLabels() {
+    let prefix = "2Shot";
+    if (selectedService === "mng") prefix = "MnG";
+    if (selectedService === "videocall") prefix = "VC";
+
     const rows = additionalBackupsContainer.querySelectorAll(".dynamic-member-row");
     rows.forEach((row, index) => {
         const label = row.querySelector("label");
         const select = row.querySelector("select");
         const num = index + 2;
-        label.innerHTML = `<i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan ${num} (Alternatif)`;
+        label.innerHTML = `<i class="fa-solid fa-star-half-stroke text-gold-dim"></i> ${prefix} Cadangan ${num} (Alternatif)`;
         select.id = `backupMember_${num}`;
         const firstOpt = select.querySelector("option[disabled]");
         if (firstOpt) {
@@ -225,13 +313,17 @@ function addAdditionalBackup(initialValue = "") {
     const rowCount = additionalBackupsContainer.querySelectorAll(".dynamic-member-row").length;
     const num = rowCount + 2;
     
+    let prefix = "2Shot";
+    if (selectedService === "mng") prefix = "MnG";
+    if (selectedService === "videocall") prefix = "VC";
+
     const row = document.createElement("div");
     row.className = "dynamic-member-row animate-fade-in";
     row.style.animationDuration = "0.3s";
     
     row.innerHTML = `
         <div class="input-group">
-            <label for="backupMember_${num}"><i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan ${num} (Alternatif)</label>
+            <label for="backupMember_${num}"><i class="fa-solid fa-star-half-stroke text-gold-dim"></i> ${prefix} Cadangan ${num} (Alternatif)</label>
             <select id="backupMember_${num}" required>
                 <option value="" disabled selected>Pilih Member Cadangan ${num} (Alternatif)</option>
                 <option value="">-- Kosongkan Pilihan --</option>
@@ -245,7 +337,8 @@ function addAdditionalBackup(initialValue = "") {
     const select = row.querySelector("select");
     memberPricelist.forEach(member => {
         const optionVal = `${member.name} - ${member.team}`;
-        const priceLabel = member.price ? ` - Rp ${(member.price / 1000)}K` : ' - Tanya Admin';
+        const activePrice = getMemberPrice(member, selectedService);
+        const priceLabel = activePrice ? ` - Rp ${(activePrice / 1000)}K` : ' - Tanya Admin';
         const optionText = `${member.name} (${member.team})${priceLabel}`;
         
         const opt = document.createElement("option");
@@ -280,15 +373,29 @@ function addAdditionalBackup(initialValue = "") {
 
 // Initialize Web App
 document.addEventListener("DOMContentLoaded", () => {
-    populateDropdowns();
-    renderPricelist();
     setupEventListeners();
-    updateTicketPreview();
-    checkFormValidity();
 });
 
 // Setup Event Listeners
 function setupEventListeners() {
+    // Service selector cards click
+    serviceSelectCards.forEach(card => {
+        card.addEventListener("click", () => {
+            const service = card.getAttribute("data-service");
+            selectService(service);
+        });
+    });
+
+    // Back to selector button click
+    backToSelectorBtn.addEventListener("click", () => {
+        jokiForm.reset();
+        additionalPrioritiesContainer.innerHTML = "";
+        additionalBackupsContainer.innerHTML = "";
+        bookingFormScreen.style.display = "none";
+        serviceSelectorScreen.style.display = "block";
+        checkFormValidity();
+    });
+
     // Checkbox Terms
     agreeCheckbox.addEventListener("change", checkFormValidity);
 
@@ -344,6 +451,66 @@ function setupEventListeners() {
     copyTextBtn.addEventListener("click", copyFormattedText);
     submitWaBtn.addEventListener("click", sendToWhatsApp);
     downloadTicketBtn.addEventListener("click", downloadTicketImage);
+}
+
+// Function to select active service and transition to the booking form screen
+function selectService(service) {
+    selectedService = service;
+    
+    // Update UI headers and labels dynamically
+    if (service === "twoshot") {
+        formTitleText.textContent = "Formulir Pemesanan Joki 2-Shot";
+        selectionBoxTitle.textContent = "Pemilihan Member 2-Shot";
+        selectionBoxDesc.textContent = "Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau pilih dari dropdown di bawah.";
+        priorityLabel.innerHTML = '<i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas 1';
+        backupLabel.innerHTML = '<i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan 1 (Alternatif)';
+        ticketTitleText.textContent = "JOKI 2-SHOT TICKET";
+        ticketPriorityLabel.textContent = "PRIORITAS 2-SHOT";
+        ticketBackupLabel.textContent = "CADANGAN 2-SHOT";
+        disclaimerServiceType.textContent = "2-Shot";
+        
+        addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
+        addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
+    } else if (service === "mng") {
+        formTitleText.textContent = "Formulir Pemesanan Joki Meet & Greet";
+        selectionBoxTitle.textContent = "Pemilihan Member Meet & Greet";
+        selectionBoxDesc.textContent = "Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau pilih dari dropdown di bawah.";
+        priorityLabel.innerHTML = '<i class="fa-solid fa-star text-gold"></i> MnG Prioritas 1';
+        backupLabel.innerHTML = '<i class="fa-solid fa-star-half-stroke text-gold-dim"></i> MnG Cadangan 1 (Alternatif)';
+        ticketTitleText.textContent = "JOKI MEET & GREET TICKET";
+        ticketPriorityLabel.textContent = "PRIORITAS MnG";
+        ticketBackupLabel.textContent = "CADANGAN MnG";
+        disclaimerServiceType.textContent = "Meet & Greet";
+        
+        addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
+        addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
+    } else if (service === "videocall") {
+        formTitleText.textContent = "Formulir Pemesanan Joki Video Call";
+        selectionBoxTitle.textContent = "Pemilihan Member Video Call";
+        selectionBoxDesc.textContent = "Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau pilih dari dropdown di bawah.";
+        priorityLabel.innerHTML = '<i class="fa-solid fa-star text-gold"></i> VC Prioritas 1';
+        backupLabel.innerHTML = '<i class="fa-solid fa-star-half-stroke text-gold-dim"></i> VC Cadangan 1 (Alternatif)';
+        ticketTitleText.textContent = "JOKI VIDEO CALL TICKET";
+        ticketPriorityLabel.textContent = "PRIORITAS VIDEO CALL";
+        ticketBackupLabel.textContent = "CADANGAN VIDEO CALL";
+        disclaimerServiceType.textContent = "Video Call";
+        
+        addPriorityBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Prioritas';
+        addBackupBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Tambah Member Cadangan';
+    }
+    
+    // Switch screens
+    serviceSelectorScreen.style.display = "none";
+    bookingFormScreen.style.display = "block";
+    
+    // Run setup and populating logic for this service
+    populateDropdowns();
+    renderPricelist();
+    updateTicketPreview();
+    checkFormValidity();
+    
+    // Smooth scroll to top of form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Check validation state of inputs & checkbox
@@ -417,11 +584,14 @@ function renderPricelist() {
             item.className = "member-item";
             
             // Format Price label
+            const activePrice = getMemberPrice(member, selectedService);
             let priceLabel = "Tanya Admin";
             let priceClass = "price-tag-unknown";
-            if (member.price) {
-                priceLabel = `Rp ${(member.price / 1000)}K`;
-                priceClass = `price-tag-${member.price / 1000}k`;
+            if (activePrice) {
+                priceLabel = `Rp ${(activePrice / 1000)}K`;
+                if (selectedService === "twoshot") {
+                    priceClass = `price-tag-${activePrice / 1000}k`;
+                }
             }
             
             item.innerHTML = `
@@ -557,16 +727,20 @@ function calculateEstimatedPrice() {
     const found = memberPricelist.find(m => m.name.toLowerCase() === memberName.toLowerCase());
     
     if (found) {
-        if (found.price) {
-            estimatedPrice = found.price;
-            ticketPrice.textContent = formatRupiah(found.price);
+        const activePrice = getMemberPrice(found, selectedService);
+        if (activePrice) {
+            estimatedPrice = activePrice;
+            ticketPrice.textContent = formatRupiah(activePrice);
         } else {
             estimatedPrice = "Hubungi Admin";
             ticketPrice.textContent = "Tanya Admin";
         }
     } else {
         // If typed manually, search fallback
-        estimatedPrice = 60000; // Default baseline price if not matched
+        let baseline = 60000;
+        if (selectedService === "mng") baseline = 25000;
+        if (selectedService === "videocall") baseline = 40000;
+        estimatedPrice = baseline;
         ticketPrice.textContent = formatRupiah(estimatedPrice);
     }
 }
@@ -649,7 +823,13 @@ function generateFormatString() {
     
     const priceText = typeof estimatedPrice === 'number' ? formatRupiah(estimatedPrice) : "Hubungi Admin";
 
-    return `*FORM JOKI JOKER48 - 2-SHOT*
+    let serviceName = "2-Shot";
+    if (selectedService === "mng") serviceName = "Meet & Greet";
+    if (selectedService === "videocall") serviceName = "Video Call";
+    
+    const serviceUpper = serviceName.toUpperCase();
+
+    return `*FORM JOKI JOKER48 - ${serviceUpper}*
 ----------------------------------------
 • *Nama Lengkap:* ${userName}
 • *Email address:* ${emailVal}
@@ -660,10 +840,10 @@ function generateFormatString() {
 • *Password Akun JKT48:* ${jkt48Password}
 • *Nomor WhatsApp:* ${waNumber}
 
-*2SHOT PRIORITAS*
+*${serviceUpper} PRIORITAS*
 ${prioritiesText}
 
-*2SHOT CADANGAN*
+*${serviceUpper} CADANGAN*
 ${backupsText}
 
 ----------------------------------------
@@ -700,6 +880,10 @@ async function submitToGoogleSheet() {
         }
     });
     
+    let serviceName = "2-Shot";
+    if (selectedService === "mng") serviceName = "Meet & Greet";
+    if (selectedService === "videocall") serviceName = "Video Call";
+
     const payload = {
         personalEmail: personalEmailInput.value,
         agree: agreeCheckbox.checked ? "Sudah" : "Belum",
@@ -710,7 +894,8 @@ async function submitToGoogleSheet() {
         jkt48Password: jkt48PasswordInput.value,
         whatsapp: whatsappInput.value,
         priorities: priorities.join("\n"),
-        backups: backups.join("\n")
+        backups: backups.join("\n"),
+        keterangan: serviceName
     };
     
     try {
@@ -802,9 +987,13 @@ function downloadTicketImage() {
     ctx.letterSpacing = '5px';
     ctx.fillText("JOKJOKER48", 50, 60);
     
+    let ticketTitle = "JOKI 2-SHOT TICKET";
+    if (selectedService === "mng") ticketTitle = "JOKI MEET & GREET TICKET";
+    if (selectedService === "videocall") ticketTitle = "JOKI VIDEO CALL TICKET";
+
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 36px Cinzel, Georgia, serif';
-    ctx.fillText("JOKI 2-SHOT TICKET", 50, 110);
+    ctx.fillText(ticketTitle, 50, 110);
     
     // 5. Draw Details Grid (Left Section)
     const drawDetail = (lbl, val, x, y, highlight = false) => {
@@ -817,7 +1006,7 @@ function downloadTicketImage() {
         // Truncate text if too long
         let valText = val || "-";
         
-        const maxWidth = (lbl === "CADANGAN 2-SHOT" || lbl === "PRIORITAS 2-SHOT") ? 700 : 340;
+        const maxWidth = (lbl.includes("CADANGAN") || lbl.includes("PRIORITAS")) ? 700 : 340;
         if (ctx.measureText(valText).width > maxWidth) {
             while (ctx.measureText(valText + "...").width > maxWidth && valText.length > 0) {
                 valText = valText.substring(0, valText.length - 1);
@@ -856,10 +1045,20 @@ function downloadTicketImage() {
     });
     const backupVal = backups.length > 0 ? backups.join(", ") : "-";
     
+    let priorityLabelText = "PRIORITAS 2-SHOT";
+    let backupLabelText = "CADANGAN 2-SHOT";
+    if (selectedService === "mng") {
+        priorityLabelText = "PRIORITAS MnG";
+        backupLabelText = "CADANGAN MnG";
+    } else if (selectedService === "videocall") {
+        priorityLabelText = "PRIORITAS VIDEO CALL";
+        backupLabelText = "CADANGAN VIDEO CALL";
+    }
+    
     drawDetail("NAMA KOTA", cityVal, 50, 180);
     drawDetail("TIPE AKUN", typeVal, 420, 180);
-    drawDetail("PRIORITAS 2-SHOT", priorityVal, 50, 270, true);
-    drawDetail("CADANGAN 2-SHOT", backupVal, 50, 350);
+    drawDetail(priorityLabelText, priorityVal, 50, 270, true);
+    drawDetail(backupLabelText, backupVal, 50, 350);
     
     // 6. Draw Pricing details (Right Section)
     ctx.fillStyle = '#8e786b';

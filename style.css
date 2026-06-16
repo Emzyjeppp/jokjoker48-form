@@ -702,6 +702,9 @@ body {
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     font-family: var(--font-body);
+    background-color: rgba(212, 175, 55, 0.1);
+    color: var(--color-gold);
+    border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 /* Dynamic styles from JS */
@@ -1074,4 +1077,82 @@ body {
     margin-top: 0.5rem;
     font-size: 0.75rem !important;
     opacity: 0.7;
+}
+
+/* Service Selector Cards Layout */
+.service-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .service-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.service-select-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.service-select-card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.service-card-icon {
+    font-size: 3rem;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+}
+
+.service-select-card h3 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-size: 1.35rem;
+    letter-spacing: 0.5px;
+}
+
+.service-select-card p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.price-range-badge {
+    background: #170b05;
+    color: var(--color-gold);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    margin: 0.5rem 0;
+}
+
+.service-select-card .select-service-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    pointer-events: none; /* Let card click trigger selection */
+}
+
+.service-select-card:hover .select-service-btn {
+    background: var(--color-gold-light);
 }

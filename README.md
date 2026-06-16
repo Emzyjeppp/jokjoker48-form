@@ -60,7 +60,7 @@ function doPost(e) {
     "2Shot Prioritas NAMA LENGKAP MEMBER - TEAM": data.priorities || "",
     "2Shot Cadangan (kalau prioritas habis) NAMA LENGKAP MEMBER - TEAM": data.backups || "",
     "Penjoko": "",
-    "Keterangan": ""
+    "Keterangan": data.keterangan || ""
   };
   
   for (var i = 0; i < headers.length; i++) {

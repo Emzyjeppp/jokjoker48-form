@@ -34,8 +34,54 @@
             </div>
         </header>
 
-        <!-- Terms & Rules Section -->
-        <section class="rules-section card animate-fade-in" style="animation-delay: 0.1s;">
+        <!-- Service Selector Screen -->
+        <div id="serviceSelectorScreen" class="animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="selector-title-container" style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.8rem; margin-bottom: 0.5rem;">Pilih Layanan Joki JKT48</h2>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">Silakan pilih jenis jasa joki JKT48 yang ingin Anda pesan hari ini.</p>
+            </div>
+            <div class="service-cards-grid">
+                <!-- 2-Shot Card -->
+                <div class="service-select-card" data-service="twoshot">
+                    <div class="card-glow-indicator"></div>
+                    <i class="fa-solid fa-ticket service-card-icon"></i>
+                    <h3>Joki 2-Shot</h3>
+                    <p>Jasa war tiket 2-Shot JKT48. Pilih prioritas member dan cadangan Anda.</p>
+                    <div class="price-range-badge">Rp 60K - Rp 100K</div>
+                    <button type="button" class="action-btn btn-primary select-service-btn">Pesan Sekarang</button>
+                </div>
+                <!-- Meet & Greet Card -->
+                <div class="service-select-card" data-service="mng">
+                    <div class="card-glow-indicator"></div>
+                    <i class="fa-solid fa-handshake service-card-icon"></i>
+                    <h3>Joki Meet & Greet</h3>
+                    <p>Jasa joki war tiket festival Meet & Greet JKT48. Cepat, aman, dan terpercaya.</p>
+                    <div class="price-range-badge">Rp 25K - Rp 50K</div>
+                    <button type="button" class="action-btn btn-primary select-service-btn">Pesan Sekarang</button>
+                </div>
+                <!-- Video Call Card -->
+                <div class="service-select-card" data-service="videocall">
+                    <div class="card-glow-indicator"></div>
+                    <i class="fa-solid fa-video service-card-icon"></i>
+                    <h3>Joki Video Call</h3>
+                    <p>Jasa war tiket sesi Video Call JKT48 bersama Oshi kesayangan Anda.</p>
+                    <div class="price-range-badge">Rp 40K - Rp 85K</div>
+                    <button type="button" class="action-btn btn-primary select-service-btn">Pesan Sekarang</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form Screen -->
+        <div id="bookingFormScreen" style="display: none;">
+            <!-- Back to Selector Button -->
+            <div style="margin-bottom: 2rem;">
+                <button type="button" id="backToSelectorBtn" class="btn-back-link" style="background: none; border: none; color: var(--color-gold); font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; font-family: var(--font-body);">
+                    <i class="fa-solid fa-arrow-left"></i> Ganti Jenis Layanan Joki
+                </button>
+            </div>
+
+            <!-- Terms & Rules Section -->
+            <section class="rules-section card animate-fade-in" style="animation-delay: 0.1s;">
             <div class="card-header">
                 <i class="fa-solid fa-scroll card-icon"></i>
                 <h2>Ketentuan & Deskripsi Jasa Joki</h2>
@@ -81,7 +127,7 @@
             <section class="form-section card animate-fade-in" style="animation-delay: 0.2s;">
                 <div class="card-header">
                     <i class="fa-solid fa-pen-to-square card-icon"></i>
-                    <h2>Formulir Pemesanan</h2>
+                    <h2 id="formTitleText">Formulir Pemesanan</h2>
                 </div>
                 
                 <form id="jokiForm" onsubmit="return false;">
@@ -142,11 +188,11 @@
 
                     <!-- 2Shot Selection -->
                     <div class="twoshot-selection-box">
-                        <div class="box-title">Pemilihan Member 2-Shot</div>
-                        <p class="box-desc">Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau ketik manual di bawah.</p>
+                        <div class="box-title" id="selectionBoxTitle">Pemilihan Member 2-Shot</div>
+                        <p class="box-desc" id="selectionBoxDesc">Klik nama member pada daftar harga di sebelah kanan untuk mengisi otomatis, atau pilih dari dropdown di bawah.</p>
                         
                         <div class="input-group">
-                            <label for="priorityMember"><i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas 1</label>
+                            <label for="priorityMember" id="priorityLabel"><i class="fa-solid fa-star text-gold"></i> 2Shot Prioritas 1</label>
                             <select id="priorityMember" required>
                                 <option value="" disabled selected>Pilih Member Prioritas 1</option>
                             </select>
@@ -160,7 +206,7 @@
                         </button>
 
                         <div class="input-group">
-                            <label for="backupMember"><i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan 1 (Alternatif)</label>
+                            <label for="backupMember" id="backupLabel"><i class="fa-solid fa-star-half-stroke text-gold-dim"></i> 2Shot Cadangan 1 (Alternatif)</label>
                             <select id="backupMember" required>
                                 <option value="" disabled selected>Pilih Member Cadangan 1 (Alternatif)</option>
                             </select>
@@ -223,7 +269,7 @@
                 <div class="virtual-ticket" id="virtualTicket">
                     <div class="ticket-left">
                         <div class="ticket-brand">JOKJOKER48</div>
-                        <div class="ticket-title">JOKI 2-SHOT TICKET</div>
+                        <div class="ticket-title" id="ticketTitleText">JOKI 2-SHOT TICKET</div>
                         <div class="ticket-details-grid">
                             <div class="detail-cell">
                                 <span class="detail-lbl">NAMA KOTA</span>
@@ -234,11 +280,11 @@
                                 <span class="detail-val" id="ticketAccountType">-</span>
                             </div>
                             <div class="detail-cell colspan-2">
-                                <span class="detail-lbl">PRIORITAS 2-SHOT</span>
+                                <span class="detail-lbl" id="ticketPriorityLabel">PRIORITAS 2-SHOT</span>
                                 <span class="detail-val text-highlight-gold" id="ticketPriority">-</span>
                             </div>
                             <div class="detail-cell colspan-2">
-                                <span class="detail-lbl">CADANGAN 2-SHOT</span>
+                                <span class="detail-lbl" id="ticketBackupLabel">CADANGAN 2-SHOT</span>
                                 <span class="detail-val" id="ticketBackup">-</span>
                             </div>
                         </div>
@@ -272,8 +318,9 @@
                     <i class="fa-brands fa-whatsapp"></i> Kirim Form ke WhatsApp Admin
                 </button>
             </div>
-            <p class="submit-disclaimer"><i class="fa-solid fa-lock"></i> Data kredensial akun Anda aman dan hanya digunakan untuk kepentingan pemesanan tiket 2-Shot oleh Admin JokJoker48.</p>
+            <p class="submit-disclaimer"><i class="fa-solid fa-lock"></i> Data kredensial akun Anda aman dan hanya digunakan untuk kepentingan pemesanan tiket <span id="disclaimerServiceType">2-Shot</span> oleh Admin JokJoker48.</p>
         </section>
+    </div> <!-- End Booking Form Screen -->
 
         <!-- Hidden canvas for ticket image generation -->
         <canvas id="ticketCanvas" style="display: none;"></canvas>
