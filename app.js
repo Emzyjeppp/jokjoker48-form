@@ -133,11 +133,16 @@ const copyTextBtn = document.getElementById("copyTextBtn");
 const downloadTicketBtn = document.getElementById("downloadTicketBtn");
 const submitWaBtn = document.getElementById("submitWaBtn");
 
+// Captcha Elements
+const captchaQuestion = document.getElementById("captchaQuestion");
+const captchaAnswer = document.getElementById("captchaAnswer");
+
 // Active state values
 let selectedService = "twoshot"; // default
 let currentTeamFilter = "all";
 let searchKeyword = "";
 let estimatedPrice = 0;
+let captchaSolution = 0;
 
 // Helper to determine member price based on active service
 function getMemberPrice(member, service) {
@@ -425,9 +430,20 @@ function addAdditionalBackup(initialValue = "") {
     checkFormValidity();
 }
 
+// Generate a new math captcha question
+function generateCaptcha() {
+    if (!captchaQuestion || !captchaAnswer) return;
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    captchaSolution = num1 + num2;
+    captchaQuestion.textContent = `${num1} + ${num2} =`;
+    captchaAnswer.value = "";
+}
+
 // Initialize Web App
 document.addEventListener("DOMContentLoaded", () => {
     setupEventListeners();
+    generateCaptcha();
 });
 
 // Setup Event Listeners
@@ -505,6 +521,7 @@ function setupEventListeners() {
     copyTextBtn.addEventListener("click", copyFormattedText);
     submitWaBtn.addEventListener("click", submitFormAndRedirect);
     downloadTicketBtn.addEventListener("click", downloadTicketImage);
+    captchaAnswer.addEventListener("input", checkFormValidity);
 }
 
 // Function to select active service and transition to the booking form screen
@@ -597,7 +614,8 @@ function checkFormValidity() {
     });
 
     const isAgreed = agreeCheckbox.checked;
-    const canSubmit = isFormValid && isAgreed;
+    const isCaptchaCorrect = parseInt(captchaAnswer.value, 10) === captchaSolution;
+    const canSubmit = isFormValid && isAgreed && isCaptchaCorrect;
     
     copyTextBtn.disabled = !canSubmit;
     downloadTicketBtn.disabled = !canSubmit;
@@ -1010,6 +1028,10 @@ async function submitFormAndRedirect() {
     // Restore button
     submitWaBtn.disabled = false;
     submitWaBtn.innerHTML = originalText;
+    
+    // Reset captcha and revalidate
+    generateCaptcha();
+    checkFormValidity();
     
     // Open X profile URL
     const url = "https://x.com/JokJoker48";

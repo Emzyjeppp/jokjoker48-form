@@ -115,6 +115,14 @@
                     <p><strong>Dilarang joki di tempat lain</strong> setelah mengisi formulir ini untuk menghindari bentrok.</p>
                 </div>
             </div>
+            <div class="input-group math-captcha-container" style="margin-top: 1.5rem; margin-bottom: 1rem; background: var(--bg-card); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                <label style="margin-bottom: 0.5rem; display: block; font-weight: 600; font-size: 0.9rem; color: var(--text-primary);"><i class="fa-solid fa-robot text-gold"></i> Verifikasi Keamanan (Anti-Spam)</label>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span id="captchaQuestion" style="font-family: var(--font-body); font-size: 1.1rem; font-weight: 700; color: var(--color-gold-light); letter-spacing: 1px;">-</span>
+                    <input type="number" id="captchaAnswer" placeholder="Jawaban" required style="width: 100px; padding: 0.5rem; text-align: center; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; color: white; outline: none; font-size: 0.95rem; font-family: var(--font-body); transition: border-color 0.2s;">
+                </div>
+            </div>
+            
             <div class="checkbox-container">
                 <label class="custom-checkbox">
                     <input type="checkbox" id="agreeCheckbox">

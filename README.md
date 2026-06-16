@@ -70,6 +70,9 @@ Agar form dapat mengirimkan data otomatis ke Google Spreadsheet Anda sebelum men
 Buka Google Spreadsheet Anda, klik menu **Extensions (Ekstensi)** -> **Apps Script**, hapus semua kode bawaan lalu tempel kode berikut:
 
 ```javascript
+// Kata sandi admin untuk mengamankan data
+var ADMIN_SECRET_PASSWORD = "jokjoker48admin"; // SILAKAN GANTI KATA SANDI AMAN ANDA DI SINI
+
 function doPost(e) {
   var data;
   try {
@@ -172,6 +175,14 @@ function doGet(e) {
   var action = e.parameter.action;
   
   if (action === "getData") {
+    var pass = e.parameter.pass;
+    
+    // Verifikasi kata sandi admin
+    if (pass !== ADMIN_SECRET_PASSWORD) {
+      return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": "Unauthorized" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
     var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     var sheets = ["2-Shot", "Meet & Greet", "Video Call"];
     var allData = {};

@@ -747,7 +747,6 @@
     <script>
         // CONFIGURATION
         const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUSURtPJzojazKVl3DqVE6D4WRYNDqd9P00gHyoH-7JkI7Y3z0FyDQO05sHFqN3wFWgA/exec";
-        const ADMIN_PASSWORD = "jokjoker48admin"; // Ganti kata sandi admin Anda di sini
 
         // Local State
         let allBookings = []; // Raw parsed list of all bookings
@@ -760,7 +759,8 @@
         // Check authentication status on load
         window.addEventListener('DOMContentLoaded', () => {
             const isAuth = sessionStorage.getItem('adminAuthenticated');
-            if (isAuth === 'true') {
+            const token = sessionStorage.getItem('adminToken');
+            if (isAuth === 'true' && token) {
                 showDashboard();
             }
         });
@@ -769,21 +769,17 @@
         function handleLogin(e) {
             e.preventDefault();
             const input = document.getElementById("adminPasswordInput").value;
-            const errorDiv = document.getElementById("loginError");
-
-            if (input === ADMIN_PASSWORD) {
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                errorDiv.style.display = 'none';
-                showDashboard();
-            } else {
-                errorDiv.style.display = 'block';
-                document.getElementById("adminPasswordInput").value = "";
-                document.getElementById("adminPasswordInput").focus();
-            }
+            
+            // Simpan password sementara di sessionStorage sebagai token
+            sessionStorage.setItem('adminToken', input);
+            document.getElementById("loginError").style.display = 'none';
+            
+            showDashboard();
         }
 
         function logoutAdmin() {
             sessionStorage.removeItem('adminAuthenticated');
+            sessionStorage.removeItem('adminToken');
             document.getElementById("loginOverlay").style.display = "flex";
             document.getElementById("dashboardContainer").style.display = "none";
             document.getElementById("adminPasswordInput").value = "";
@@ -814,21 +810,34 @@
                 return;
             }
 
+            const token = sessionStorage.getItem('adminToken') || '';
+
             try {
-                // Fetch data via GET using action=getData parameter
-                const response = await fetch(`${GOOGLE_SHEET_SCRIPT_URL}?action=getData`);
+                // Fetch data via GET using action=getData & pass parameter
+                const response = await fetch(`${GOOGLE_SHEET_SCRIPT_URL}?action=getData&pass=${encodeURIComponent(token)}`);
                 const result = await response.json();
 
                 if (result.result === "success" && result.data) {
+                    sessionStorage.setItem('adminAuthenticated', 'true');
                     processBookings(result.data);
+                } else if (result.result === "error" && result.message === "Unauthorized") {
+                    throw new Error("Unauthorized");
                 } else {
                     throw new Error("Invalid response format");
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
                 loading.style.display = "none";
-                empty.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color: var(--warning-red);"></i><p>Gagal memuat data dari spreadsheet.<br><small style="color: var(--text-muted); font-size: 0.8rem;">Pastikan Apps Script telah di-deploy ulang dan URL benar.</small></p>`;
-                empty.style.display = "block";
+                
+                if (error.message === "Unauthorized") {
+                    // Password salah, keluarkan admin dan tampilkan pesan kesalahan
+                    logoutAdmin();
+                    document.getElementById("loginError").style.display = 'block';
+                    document.getElementById("loginError").textContent = "Kata sandi salah! Akses ditolak.";
+                } else {
+                    empty.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color: var(--warning-red);"></i><p>Gagal memuat data dari spreadsheet.<br><small style="color: var(--text-muted); font-size: 0.8rem;">Pastikan Apps Script telah di-deploy ulang dan URL benar.</small></p>`;
+                    empty.style.display = "block";
+                }
             }
         }
 
