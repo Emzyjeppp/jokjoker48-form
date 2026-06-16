@@ -850,17 +850,17 @@
                     // Normalize spreadsheet headers (handling lowercase/spaces)
                     const normalizedRow = {
                         timestamp: row["Timestamp"] || "",
-                        email: row["Email address"] || "",
-                        agree: row["Sudah membaca deskripsi diatas?"] || "",
-                        accountType: row["Tipe akun"] || "",
-                        name: row["Nama"] || "",
-                        city: row["Kota"] || "",
-                        jkt48Email: row["Email Akun JKT48 Pastikan diisi dengan benar !"] || "",
-                        jkt48Password: row["Password Akun JKT48 Pastikan diisi dengan benar !"] || "",
-                        whatsapp: row["Nomor WhatsApp Aktif (Untuk Dihubungi)"] || "",
-                        priorities: row["2Shot Prioritas NAMA LENGKAP MEMBER - TEAM"] || "",
-                        backups: row["2Shot Cadangan (kalau prioritas habis) NAMA LENGKAP MEMBER - TEAM"] || "",
-                        keterangan: row["Keterangan"] || service
+                        email: String(row["Email address"] || ""),
+                        agree: String(row["Sudah membaca deskripsi diatas?"] || ""),
+                        accountType: String(row["Tipe akun"] || ""),
+                        name: String(row["Nama"] || ""),
+                        city: String(row["Kota"] || ""),
+                        jkt48Email: String(row["Email Akun JKT48 Pastikan diisi dengan benar !"] || ""),
+                        jkt48Password: String(row["Password Akun JKT48 Pastikan diisi dengan benar !"] || ""),
+                        whatsapp: String(row["Nomor WhatsApp Aktif (Untuk Dihubungi)"] || ""),
+                        priorities: String(row["2Shot Prioritas NAMA LENGKAP MEMBER - TEAM"] || ""),
+                        backups: String(row["2Shot Cadangan (kalau prioritas habis) NAMA LENGKAP MEMBER - TEAM"] || ""),
+                        keterangan: String(row["Keterangan"] || service)
                     };
                     allBookings.push(normalizedRow);
                 });
