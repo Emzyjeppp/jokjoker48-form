@@ -71,18 +71,30 @@ Buka Google Spreadsheet Anda, klik menu **Extensions (Ekstensi)** -> **Apps Scri
 
 ```javascript
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Book 2s theater sementara (Responses)") || 
-              SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Form Responses 1") || 
-              SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  
   var data;
   try {
     data = JSON.parse(e.postData.contents);
   } catch(err) {
     data = e.parameter;
   }
+
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var service = data.keterangan || "2-Shot"; // "2-Shot", "Meet & Greet", "Video Call"
   
-  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  // Memilih tab lembar kerja secara dinamis berdasarkan jenis layanan
+  var sheetName = "Form Responses 1"; // default/cadangan
+  if (service === "2-Shot") {
+    sheetName = spreadsheet.getSheetByName("2-Shot") ? "2-Shot" : "Book 2s theater sementara (Responses)";
+  } else if (service === "Meet & Greet") {
+    sheetName = spreadsheet.getSheetByName("Meet & Greet") ? "Meet & Greet" : "MnG";
+  } else if (service === "Video Call") {
+    sheetName = spreadsheet.getSheetByName("Video Call") ? "Video Call" : "VC";
+  }
+  
+  // Ambil sheet berdasarkan nama, jika tidak ada pakai sheet aktif utama
+  var sheet = spreadsheet.getSheetByName(sheetName) || spreadsheet.getActiveSheet();
+  
+  var headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
   var rowData = new Array(headers.length);
   
   var fieldMapping = {
@@ -101,19 +113,20 @@ function doPost(e) {
     "Keterangan": data.keterangan || ""
   };
   
-  for (var i = 0; i < headers.length; i++) {
-    var header = headers[i].trim();
-    var matchedValue = "";
-    for (var key in fieldMapping) {
-      if (header.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-        matchedValue = fieldMapping[key];
-        break;
+  if (headers.length > 0 && headers[0] !== "") {
+    for (var i = 0; i < headers.length; i++) {
+      var header = headers[i].trim();
+      var matchedValue = "";
+      for (var key in fieldMapping) {
+        if (header.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+          matchedValue = fieldMapping[key];
+          break;
+        }
       }
+      rowData[i] = matchedValue !== "" ? matchedValue : "";
     }
-    rowData[i] = matchedValue !== "" ? matchedValue : "";
-  }
-  
-  if (headers.length === 0 || (headers.length === 1 && headers[0] === "")) {
+  } else {
+    // Susunan kolom default jika sheet kosong tanpa header
     rowData = [
       new Date(),
       data.personalEmail || "",
@@ -127,13 +140,13 @@ function doPost(e) {
       data.priorities || "",
       data.backups || "",
       "",
-      ""
+      data.keterangan || ""
     ];
   }
   
   sheet.appendRow(rowData);
   
-  return ContentService.createTextOutput(JSON.stringify({ "result": "success" }))
+  return ContentService.createTextOutput(JSON.stringify({ "result": "success", "sheetUsed": sheet.getName() }))
                        .setMimeType(ContentService.MimeType.JSON)
                        .setHeader("Access-Control-Allow-Origin", "*");
 }
