@@ -91,12 +91,18 @@
         .twoshot-price-grid, .mng-price-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
         }
         
-        @media (min-width: 768px) {
+        @media (min-width: 576px) {
             .twoshot-price-grid, .mng-price-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .twoshot-price-grid, .mng-price-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
         
@@ -104,7 +110,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem 1rem;
             box-shadow: var(--shadow-card);
         }
         
