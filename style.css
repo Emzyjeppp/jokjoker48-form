@@ -78,6 +78,23 @@ body {
     margin-bottom: 2.5rem;
 }
 
+.header-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.header-nav-btn {
+    display: inline-flex;
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
 .logo-area {
     display: flex;
     align-items: center;
@@ -809,7 +826,7 @@ body {
 
 .ticket-details-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.75rem;
 }
 
@@ -927,6 +944,36 @@ body {
 }
 
 @media (max-width: 576px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .card {
+        padding: 1.25rem 1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+
+    .rules-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .service-select-card {
+        padding: 1.75rem 1.25rem;
+    }
+
     .virtual-ticket {
         height: auto;
         flex-direction: column;
@@ -946,7 +993,15 @@ body {
     .ticket-right {
         width: 100%;
         flex-direction: row;
-        padding-top: 1.5rem;
+        padding: 1.25rem 1rem;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .ticket-price-badge,
+    .ticket-barcode-area {
+        width: auto;
     }
     
     .barcode {
