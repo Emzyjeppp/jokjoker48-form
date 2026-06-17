@@ -1096,7 +1096,9 @@
             if (cleanWa.startsWith("0")) {
                 cleanWa = "62" + cleanWa.slice(1);
             }
-            const waMsg = encodeURIComponent(`Halo ${booking.name}, kami dari Admin JokJoker48 ingin mengonfirmasi pesanan joki ${booking.keterangan} Anda.`);
+            const firstPriorityName = booking.priorities ? booking.priorities.split("\n")[0].split(" - ")[0].trim() : "-";
+            const greeting = `Permisi kak selamat malam, ini dari JokiJOKER48, ingin konfirmasi bahwa form A/N ${booking.name} yang sudah di isi untuk Theater Sementara kota ${booking.city}, Member yang dipilih Sebelumnya itu ${firstPriorityName} jika iya, mohon konfirmasi nya dan apakah ada alternatif yang mau ditambahkan dari kedua pilihan tersebut tersebut?, Terimakasih🙏🏻`;
+            const waMsg = encodeURIComponent(greeting);
             document.getElementById("modalWaBtn").href = `https://wa.me/${cleanWa}?text=${waMsg}`;
 
             toggleDetailsModal(true);
@@ -1139,16 +1141,20 @@
             const prioritiesFormatted = booking.priorities.split("\n").map((p, i) => `${i + 1}. ${p}`).join("\n");
             const backupsFormatted = booking.backups.split("\n").map((b, i) => `${i + 1}. ${b}`).join("\n");
             
+            const firstPriorityName = booking.priorities ? booking.priorities.split("\n")[0].split(" - ")[0].trim() : "-";
+            
             let cityLine = "";
             if (booking.keterangan !== "Video Call") {
                 cityLine = `• *Nama Kota:* ${booking.city}\n`;
             }
 
-            return `*FORM JOKI JOKER48 - ${booking.keterangan.toUpperCase()}*
+            return `Permisi kak selamat malam, ini dari JokiJOKER48, ingin konfirmasi bahwa form A/N ${booking.name} yang sudah di isi untuk Theater Sementara kota ${booking.city}, Member yang dipilih Sebelumnya itu ${firstPriorityName} jika iya, mohon konfirmasi nya dan apakah ada alternatif yang mau ditambahkan dari kedua pilihan tersebut tersebut?, Terimakasih🙏🏻
+
+*RINCIAN FORM PEMESANAN:*
 ----------------------------------------
+• *Jenis Layanan:* ${booking.keterangan}
 • *Nama Lengkap:* ${booking.name}
 • *Email address:* ${booking.email}
-• *Sudah membaca deskripsi:* Ya
 • *Tipe akun:* ${booking.accountType}
 ${cityLine}• *Email Akun JKT48:* ${booking.jkt48Email}
 • *Password Akun JKT48:* ${booking.jkt48Password}
