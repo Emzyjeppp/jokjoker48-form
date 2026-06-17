@@ -1,0 +1,255 @@
+/* Specific layout styles for Pricelist page */
+        .pricelist-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .pricelist-tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .pricelist-tab-btn:hover {
+            border-color: var(--color-gold);
+            color: var(--color-gold);
+        }
+        
+        .pricelist-tab-btn.active {
+            background: var(--color-gold);
+            color: #1e110b;
+            border-color: var(--color-gold);
+        }
+        
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 2.5rem auto;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            background: #170b05;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: #0d0502;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .pricelist-section-title {
+            text-align: center;
+            font-family: var(--font-heading);
+            color: var(--color-gold);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .twoshot-price-grid, .mng-price-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 576px) {
+            .twoshot-price-grid, .mng-price-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .twoshot-price-grid, .mng-price-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .team-table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .team-table-header {
+            font-family: var(--font-heading);
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 1px;
+        }
+        
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.05);
+            font-size: 0.95rem;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .member-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .member-price {
+            font-weight: 700;
+            color: var(--color-gold);
+        }
+        
+        .member-price.unknown {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Videocall Specific Grid */
+        .vc-price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .vc-tier-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .vc-tier-header {
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .vc-tier-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .vc-tier-price {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--color-gold);
+        }
+        
+        .vc-member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .vc-member-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .vc-member-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        
+        .vc-member-item {
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.01);
+        }
+        
+        .back-nav {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--color-gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        
+        .btn-back:hover {
+            background: var(--color-gold);
+            color: #1e110b;
+            border-color: var(--color-gold);
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 3rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 576px) {
+            .pricelist-section-title {
+                font-size: 1.4rem;
+            }
+            .vc-price-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .vc-tier-card {
+                padding: 1.25rem 1rem;
+            }
+        }
