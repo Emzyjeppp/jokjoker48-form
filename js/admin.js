@@ -112,6 +112,12 @@
             services.forEach(service => {
                 const rows = data[service] || [];
                 rows.forEach(row => {
+                    // Extract Order ID from Keterangan e.g. "2-Shot [JOKER-A8B9C]"
+                    const rawKeterangan = String(row["Keterangan"] || service);
+                    const orderIdMatch = rawKeterangan.match(/\[(JOKER-[A-Z0-9]+)\]/i);
+                    const orderId = orderIdMatch ? orderIdMatch[1] : "-";
+                    const cleanKeterangan = rawKeterangan.replace(/\s*\[JOKER-[A-Z0-9]+\]/i, '').trim();
+
                     // Normalize spreadsheet headers (handling lowercase/spaces)
                     const normalizedRow = {
                         timestamp: row["Timestamp"] || "",
@@ -125,7 +131,8 @@
                         whatsapp: String(row["Nomor WhatsApp Aktif (Untuk Dihubungi)"] || ""),
                         priorities: String(row["2Shot Prioritas NAMA LENGKAP MEMBER - TEAM"] || ""),
                         backups: String(row["2Shot Cadangan (kalau prioritas habis) NAMA LENGKAP MEMBER - TEAM"] || ""),
-                        keterangan: String(row["Keterangan"] || service)
+                        keterangan: cleanKeterangan,
+                        orderId: orderId
                     };
                     allBookings.push(normalizedRow);
                 });
@@ -219,6 +226,7 @@
                     booking.whatsapp.toLowerCase().includes(query) ||
                     booking.priorities.toLowerCase().includes(query) ||
                     booking.backups.toLowerCase().includes(query) ||
+                    booking.orderId.toLowerCase().includes(query) ||
                     booking.city.toLowerCase().includes(query);
 
                 return matchesService && matchesSearch;
@@ -288,6 +296,7 @@
 
                 tr.innerHTML = `
                     <td style="color: var(--text-muted); font-weight: 500;">${index + 1}</td>
+                    <td style="font-weight: 700; color: var(--color-gold); font-family: monospace;">${booking.orderId}</td>
                     <td style="font-size: 0.8rem; font-weight: 500;">${timeStr}</td>
                     <td><span class="badge-service ${badgeClass}">${booking.keterangan}</span></td>
                     <td style="font-weight: 600;">${booking.name}</td>
@@ -320,6 +329,9 @@
             isPasswordVisible = false;
             document.getElementById("infoJkt48Password").textContent = "••••••••";
             document.getElementById("togglePassBtn").innerHTML = `<i class="fa-solid fa-eye"></i>`;
+
+            // Set modal title with Order ID
+            document.getElementById("modalTitle").innerHTML = `<i class="fa-solid fa-ticket"></i> Detail Pemesanan <span style="color: var(--color-gold); font-family: monospace; font-size: 0.95rem; margin-left: 0.5rem;">[${booking.orderId}]</span>`;
 
             // Populate text details
             document.getElementById("infoTimestamp").textContent = booking.timestamp ? new Date(booking.timestamp).toLocaleString("id-ID") : "-";

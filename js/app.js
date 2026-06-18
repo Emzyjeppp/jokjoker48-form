@@ -143,6 +143,7 @@ let currentTeamFilter = "all";
 let searchKeyword = "";
 let estimatedPrice = 0;
 let captchaSolution = 0;
+let currentOrderId = "";
 
 // Helper to determine member price based on active service
 function getMemberPrice(member, service) {
@@ -234,6 +235,22 @@ function updatePriceLegend() {
             <span class="legend-item"><span class="legend-color tier-pink"></span> Rp 85K</span>
             <span class="legend-item"><span class="legend-color tier-grey"></span> Tanya Admin</span>
         `;
+    }
+}
+
+// Generate a unique Order ID
+function generateOrderId() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let rand = "";
+    for (let i = 0; i < 5; i++) {
+        rand += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    currentOrderId = `JOKER-${rand}`;
+    
+    // Update barcode text element on the ticket
+    const barcodeText = document.querySelector(".barcode-text");
+    if (barcodeText) {
+        barcodeText.textContent = currentOrderId;
     }
 }
 
@@ -587,6 +604,8 @@ function selectService(service) {
     serviceSelectorScreen.style.display = "none";
     bookingFormScreen.style.display = "block";
     
+    generateOrderId(); // Generate a fresh Order ID for this form session
+    
     // Run setup and populating logic for this service
     updatePriceLegend();
     populateDropdowns();
@@ -932,6 +951,7 @@ function generateFormatString() {
 
     return `*FORM JOKI JOKER48 - ${serviceUpper}*
 ----------------------------------------
+• *No. Pemesanan:* ${currentOrderId}
 • *Nama Lengkap:* ${userName}
 • *Email address:* ${emailVal}
 • *Sudah membaca deskripsi:* ${isAgreed}
@@ -995,7 +1015,7 @@ async function submitToGoogleSheet() {
         whatsapp: whatsappInput.value,
         priorities: priorities.join("\n"),
         backups: backups.join("\n"),
-        keterangan: serviceName
+        keterangan: `${serviceName} [${currentOrderId}]`
     };
     
     try {
@@ -1202,7 +1222,7 @@ function downloadTicketImage() {
     ctx.fillStyle = '#737373';
     ctx.font = '12px Inter, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText("JOKER48-WAR-TICKET", (splitX + canvas.width) / 2, 395);
+    ctx.fillText(currentOrderId, (splitX + canvas.width) / 2, 395);
     ctx.textAlign = 'left'; // Reset alignment
 
     // 9. Trigger download of canvas
