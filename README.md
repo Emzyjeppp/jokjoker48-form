@@ -71,7 +71,7 @@ Buka Google Spreadsheet Anda, klik menu **Extensions (Ekstensi)** -> **Apps Scri
 
 ```javascript
 // Kata sandi admin untuk mengamankan data
-var ADMIN_SECRET_PASSWORD = "jokjoker48admin"; // SILAKAN GANTI KATA SANDI AMAN ANDA DI SINI
+var ADMIN_SECRET_PASSWORD = "#aurhelucunchgemas"; // SILAKAN GANTI KATA SANDI AMAN ANDA DI SINI
 
 function doPost(e) {
   var data;
