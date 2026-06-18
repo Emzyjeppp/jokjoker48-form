@@ -321,7 +321,7 @@
                     </td>
                     <td>${penjokoSelectHtml}</td>
                     <td style="font-weight: 700; color: var(--color-gold); font-size: 0.95rem;">${formatRupiah(price)}</td>
-                    <td style="text-align: center;">
+                    <td style="text-align: center; min-width: 110px; white-space: nowrap;">
                         <button onclick="viewBookingDetails(${allBookings.indexOf(booking)})" class="btn-action-small">
                             <i class="fa-solid fa-eye"></i> Detail
                         </button>
