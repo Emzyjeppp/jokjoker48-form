@@ -1047,10 +1047,10 @@ function downloadTicketImage() {
     canvas.width = 1200;
     canvas.height = 440;
     
-    // 1. Draw Background Gradient (Deep Chocolate / Dark Brown)
+    // 1. Draw Background Gradient (Deep Neutral Dark / Near Black)
     const bgGrad = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 50, canvas.width / 2, canvas.height / 2, canvas.width / 1.5);
-    bgGrad.addColorStop(0, '#2f1b12');
-    bgGrad.addColorStop(1, '#130905');
+    bgGrad.addColorStop(0, '#1f1f1f');
+    bgGrad.addColorStop(1, '#0d0d0d');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
@@ -1072,7 +1072,7 @@ function downloadTicketImage() {
     
     // Draw notches (simulated on image as circles filled with background)
     // Left notch is at splitX, top (y=0) and bottom (y=height)
-    ctx.fillStyle = '#120804'; // main body background
+    ctx.fillStyle = '#0a0a0a'; // main body background
     ctx.beginPath();
     ctx.arc(splitX, 0, 25, 0, Math.PI * 2);
     ctx.fill();
@@ -1099,11 +1099,11 @@ function downloadTicketImage() {
     
     // 5. Draw Details Grid (Left Section)
     const drawDetail = (lbl, val, x, y, highlight = false) => {
-        ctx.fillStyle = '#8e786b';
+        ctx.fillStyle = '#737373';
         ctx.font = 'bold 16px Inter, sans-serif';
         ctx.fillText(lbl, x, y);
         
-        ctx.fillStyle = highlight ? '#d4af37' : '#f8f1ed';
+        ctx.fillStyle = highlight ? '#d4af37' : '#f5f5f5';
         ctx.font = 'bold 20px Inter, sans-serif';
         // Truncate text if too long
         let valText = val || "-";
@@ -1163,7 +1163,7 @@ function downloadTicketImage() {
     drawDetail(backupLabelText, backupVal, 50, 350);
     
     // 6. Draw Pricing details (Right Section)
-    ctx.fillStyle = '#8e786b';
+    ctx.fillStyle = '#737373';
     ctx.font = 'bold 16px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText("ESTIMASI BIAYA", (splitX + canvas.width) / 2, 70);
@@ -1199,7 +1199,7 @@ function downloadTicketImage() {
     }
     ctx.globalAlpha = 1.0;
     
-    ctx.fillStyle = '#8e786b';
+    ctx.fillStyle = '#737373';
     ctx.font = '12px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText("JOKER48-WAR-TICKET", (splitX + canvas.width) / 2, 395);

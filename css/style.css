@@ -1,18 +1,18 @@
 /* Design System & Styling - JokJoker48 */
 :root {
-    --bg-primary: #1e110b; /* Solid Warm Brown */
-    --bg-secondary: #26160e;
-    --bg-card: #2a1910; /* Solid Card Background */
-    --border-color: #3d2518;
+    --bg-primary: #0a0a0a; /* Solid Near-Black */
+    --bg-secondary: #121212;
+    --bg-card: #171717; /* Solid Card Background */
+    --border-color: #262626;
     --border-hover: #d4af37;
     
     --color-gold: #d4af37;
     --color-gold-light: #f3e5ab;
     --color-gold-dark: #aa841c;
-    --text-primary: #f8f1ed;
-    --text-secondary: #c9b9b0;
-    --text-muted: #8e786b;
-    --warning-red: #ff5e5e;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a3a3a3;
+    --text-muted: #737373;
+    --warning-red: #ef4444;
     
     --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.25);
     
@@ -344,7 +344,7 @@ body {
 
 .input-group input, 
 .input-group select {
-    background: #170b05;
+    background: #121212;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0.85rem 1rem;
@@ -363,7 +363,7 @@ body {
 .input-group select:focus {
     outline: none;
     border-color: var(--color-gold);
-    background: #0d0502;
+    background: #080808;
 }
 
 .input-note {
@@ -640,7 +640,7 @@ body {
 
 .tab-btn.active {
     background: var(--color-gold);
-    color: #120804;
+    color: #0a0a0a;
     border-color: var(--color-gold);
     font-weight: 600;
 }
@@ -775,7 +775,7 @@ body {
     width: 100%;
     max-width: 650px;
     height: 220px;
-    background: #170d08;
+    background: #121212;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: var(--shadow-card);
@@ -1062,7 +1062,7 @@ body {
 
 .btn-primary {
     background: var(--color-gold);
-    color: #1e110b;
+    color: #0a0a0a;
     border: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
@@ -1073,13 +1073,13 @@ body {
 }
 
 .btn-secondary {
-    background: #1e110b;
+    background: #121212;
     color: var(--text-primary);
     border: 1px solid var(--border-color);
 }
 
 .btn-secondary:not(:disabled):hover {
-    background: #26160e;
+    background: #0a0a0a;
     border-color: var(--color-gold);
     color: var(--color-gold);
 }
@@ -1108,7 +1108,7 @@ body {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background: rgba(26, 15, 9, 0.95);
+    background: rgba(18, 18, 18, 0.95);
     border: 1px solid var(--color-gold);
     box-shadow: 0 5px 25px rgba(212, 175, 55, 0.25);
     color: var(--text-primary);
@@ -1205,7 +1205,7 @@ body {
 }
 
 .price-range-badge {
-    background: #170b05;
+    background: #121212;
     color: var(--color-gold);
     font-size: 0.85rem;
     font-weight: 700;
