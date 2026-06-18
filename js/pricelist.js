@@ -241,3 +241,20 @@
         document.addEventListener("DOMContentLoaded", () => {
             render();
         });
+
+        // Disable inspection tools (Anti-F12 and Anti-Right Click)
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "F12") {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && ["U", "u", "S", "s"].includes(e.key)) {
+                e.preventDefault();
+                return false;
+            }
+        });
