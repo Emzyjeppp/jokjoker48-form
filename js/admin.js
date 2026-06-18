@@ -294,6 +294,16 @@
                     cleanWa = "62" + cleanWa.slice(1);
                 }
 
+                const penjokoList = ["Aqza", "Jessen", "Arvi", "Iqbal", "Dapa", "Naury", "Faher", "Jepp", "Raygar", "oetrik", "Senna"];
+                const activePenjokoClass = booking.penjoko ? `penjoko-${booking.penjoko}` : 'penjoko-none';
+                
+                let penjokoSelectHtml = `
+                    <select class="penjoko-select ${activePenjokoClass}" onchange="changePenjoko('${booking.orderId}', '${booking.keterangan}', this)">
+                        <option value="" class="penjoko-none">-- Pilih --</option>
+                        ${penjokoList.map(name => `<option value="${name}" ${booking.penjoko === name ? 'selected' : ''}>${name}</option>`).join("")}
+                    </select>
+                `;
+
                 tr.innerHTML = `
                     <td style="color: var(--text-muted); font-weight: 500;">${index + 1}</td>
                     <td style="font-weight: 700; color: var(--color-gold); font-family: monospace;">${booking.orderId}</td>
@@ -309,6 +319,7 @@
                     <td style="font-size: 0.85rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                         ${firstPriorityName}
                     </td>
+                    <td>${penjokoSelectHtml}</td>
                     <td style="font-weight: 700; color: var(--color-gold); font-size: 0.95rem;">${formatRupiah(price)}</td>
                     <td style="text-align: center;">
                         <button onclick="viewBookingDetails(${allBookings.indexOf(booking)})" class="btn-action-small">
@@ -342,6 +353,7 @@
             document.getElementById("infoWhatsapp").textContent = booking.whatsapp;
             document.getElementById("infoAccountType").textContent = booking.accountType;
             document.getElementById("infoPrice").textContent = formatRupiah(getEstimatedBookingPrice(booking));
+            document.getElementById("infoPenjoko").textContent = booking.penjoko || "Belum Ditugaskan";
             document.getElementById("infoJkt48Email").textContent = booking.jkt48Email;
             
             // Priorities list
@@ -459,4 +471,63 @@ _(Pembayaran dilakukan setelah tiket didapatkan)_`;
             setTimeout(() => {
                 toast.classList.remove("show");
             }, 3000);
+        }
+
+        // Change Penjoko handler
+        async function changePenjoko(orderId, service, selectEl) {
+            updatePenjokoStyle(selectEl);
+            
+            const token = sessionStorage.getItem('adminToken') || '';
+            const penjokoVal = selectEl.value;
+            
+            showToast(`Menyimpan pembagian joki ke ${penjokoVal || 'kosong'}...`);
+            
+            const url = GOOGLE_SHEET_SCRIPT_URL;
+            if (!url) {
+                showToast("URL script Google Sheets belum dikonfigurasi.");
+                return;
+            }
+            
+            const payload = {
+                action: "updatePenjoko",
+                pass: token,
+                orderId: orderId,
+                service: service,
+                penjoko: penjokoVal
+            };
+            
+            try {
+                await fetch(url, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                // Keep local state in sync
+                const found = allBookings.find(b => b.orderId === orderId);
+                if (found) {
+                    found.penjoko = penjokoVal;
+                }
+                
+                showToast(`Joki berhasil dibagi ke ${penjokoVal || 'kosong'}!`);
+            } catch (err) {
+                console.error(err);
+                showToast("Gagal menyimpan pembagian joki ke Google Sheets.");
+            }
+        }
+
+        // Update CSS class for Penjoko select element dynamically
+        function updatePenjokoStyle(selectEl) {
+            const classes = Array.from(selectEl.classList).filter(c => c.startsWith('penjoko-'));
+            classes.forEach(c => selectEl.classList.remove(c));
+            
+            const val = selectEl.value;
+            if (val) {
+                selectEl.classList.add(`penjoko-${val}`);
+            } else {
+                selectEl.classList.add('penjoko-none');
+            }
         }

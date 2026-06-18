@@ -531,3 +531,33 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Styled select element for Penjoko assignments */
+        .penjoko-select {
+            background: #171717;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            width: 110px;
+        }
+
+        /* Color classes matching user's spreadsheet tags */
+        .penjoko-Aqza { background-color: #0b57d0 !important; color: #fff !important; }
+        .penjoko-Jessen { background-color: #b30000 !important; color: #fff !important; }
+        .penjoko-Arvi { background-color: #c2e7ff !important; color: #001d35 !important; }
+        .penjoko-Iqbal { background-color: #7a431d !important; color: #fff !important; }
+        .penjoko-Dapa { background-color: #681da8 !important; color: #fff !important; }
+        .penjoko-Naury { background-color: #3c4043 !important; color: #fff !important; }
+        .penjoko-Faher { background-color: #0f8b44 !important; color: #fff !important; }
+        .penjoko-Jepp { background-color: #b0c4de !important; color: #000 !important; }
+        .penjoko-Raygar { background-color: #0d5c75 !important; color: #fff !important; }
+        .penjoko-oetrik { background-color: #e3e3e3 !important; color: #000 !important; }
+        .penjoko-Senna { background-color: #e06666 !important; color: #fff !important; }
+        .penjoko-none { background-color: #262626 !important; color: var(--text-muted) !important; }

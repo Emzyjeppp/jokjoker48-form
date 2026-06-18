@@ -81,6 +81,74 @@ function doPost(e) {
     data = e.parameter;
   }
 
+  // Handle update action
+  if (data.action === "updatePenjoko") {
+    // Verifikasi kata sandi admin
+    if (data.pass !== ADMIN_SECRET_PASSWORD) {
+      return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": "Unauthorized" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    var orderId = data.orderId;
+    var penjokoValue = data.penjoko;
+    var service = data.service || "2-Shot";
+    
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheetName = "";
+    if (service === "2-Shot") {
+      sheetName = spreadsheet.getSheetByName("2-Shot") ? "2-Shot" : "Book 2s theater sementara (Responses)";
+    } else if (service === "Meet & Greet") {
+      sheetName = spreadsheet.getSheetByName("Meet & Greet") ? "Meet & Greet" : "MnG";
+    } else if (service === "Video Call") {
+      sheetName = spreadsheet.getSheetByName("Video Call") ? "Video Call" : "VC";
+    }
+    
+    var sheet = spreadsheet.getSheetByName(sheetName);
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": "Sheet not found" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    var dataRange = sheet.getDataRange();
+    var values = dataRange.getValues();
+    var headers = values[0];
+    
+    // Find column indices
+    var keteranganColIdx = -1;
+    var penjokoColIdx = -1;
+    for (var c = 0; c < headers.length; c++) {
+      var header = headers[c].trim().toLowerCase();
+      if (header.indexOf("keterangan") !== -1) keteranganColIdx = c;
+      if (header.indexOf("penjoko") !== -1) penjokoColIdx = c;
+    }
+    
+    if (keteranganColIdx === -1 || penjokoColIdx === -1) {
+      return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": "Required columns not found" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // Find matching row by Order ID inside Keterangan
+    var foundRow = -1;
+    for (var r = 1; r < values.length; r++) {
+      var cellValue = String(values[r][keteranganColIdx]);
+      if (cellValue.indexOf(orderId) !== -1) {
+        foundRow = r + 1; // Google Sheets is 1-indexed
+        break;
+      }
+    }
+    
+    if (foundRow === -1) {
+      return ContentService.createTextOutput(JSON.stringify({ "result": "error", "message": "Order ID not found" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // Update cell
+    sheet.getRange(foundRow, penjokoColIdx + 1).setValue(penjokoValue);
+    
+    return ContentService.createTextOutput(JSON.stringify({ "result": "success", "updatedRow": foundRow }))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var service = data.keterangan || "2-Shot"; // "2-Shot", "Meet & Greet", "Video Call"
   
