@@ -126,7 +126,11 @@
                     const card = document.createElement("div");
                     const isTrainee = team === "Trainee";
                     
-                    card.className = `bento-card ${isTrainee ? 'bento-span-4' : 'bento-span-2'} team-card-${team.toLowerCase()}`;
+                    // Auto expand if user is searching
+                    const isExpanded = searchKeyword ? "expanded" : "";
+                    
+                    card.className = `bento-card ${isTrainee ? 'bento-span-4' : 'bento-span-2'} team-card-${team.toLowerCase()} ${isExpanded}`;
+                    card.setAttribute("onclick", "toggleCard(this, event)");
                     
                     // Inside member lists, let's use subgrids
                     const colsClass = isTrainee ? 'cols-3' : 'cols-2';
@@ -134,15 +138,20 @@
                     card.innerHTML = `
                         <div class="bento-card-header">
                             <span class="team-badge team-${team.toLowerCase()}">Team ${team}</span>
-                            <span class="member-count">${members.length} Members</span>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="member-count">${members.length} Members</span>
+                                <i class="fa-solid fa-chevron-down bento-chevron"></i>
+                            </div>
                         </div>
-                        <div class="bento-member-grid ${colsClass}">
-                            ${members.map(m => `
-                                <div class="table-row">
-                                    <span class="member-name">${m.name}</span>
-                                    ${formatRupiah(m[priceField])}
-                                </div>
-                            `).join("")}
+                        <div class="bento-card-body">
+                            <div class="bento-member-grid ${colsClass}">
+                                ${members.map(m => `
+                                    <div class="table-row">
+                                        <span class="member-name">${m.name}</span>
+                                        ${formatRupiah(m[priceField])}
+                                    </div>
+                                `).join("")}
+                            </div>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -151,30 +160,34 @@
                     if (team === "Passion" && !searchKeyword) {
                         const noticeCard = document.createElement("div");
                         noticeCard.className = "bento-card bento-span-2 bento-notice-card";
+                        noticeCard.setAttribute("onclick", "toggleCard(this, event)");
                         noticeCard.innerHTML = `
                             <div class="bento-card-header">
                                 <span class="team-badge info-badge"><i class="fa-solid fa-circle-info"></i> Petunjuk Layanan</span>
+                                <i class="fa-solid fa-chevron-down bento-chevron"></i>
                             </div>
-                            <div class="bento-notice-content">
-                                <div class="notice-item">
-                                    <i class="fa-solid fa-shield-halved text-gold"></i>
-                                    <div>
-                                        <strong>100% Keamanan Akun</strong>
-                                        <p>Kredensial JKT48 ter-enkripsi aman dan wajib logout saat war.</p>
+                            <div class="bento-card-body">
+                                <div class="bento-notice-content">
+                                    <div class="notice-item">
+                                        <i class="fa-solid fa-shield-halved text-gold"></i>
+                                        <div>
+                                            <strong>100% Keamanan Akun</strong>
+                                            <p>Kredensial JKT48 ter-enkripsi aman dan wajib logout saat war.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="notice-item">
-                                    <i class="fa-solid fa-wallet text-gold"></i>
-                                    <div>
-                                        <strong>Poin Terisi Cukup</strong>
-                                        <p>Mohon pastikan saldo JKT48 Point Anda sudah terisi cukup.</p>
+                                    <div class="notice-item">
+                                        <i class="fa-solid fa-wallet text-gold"></i>
+                                        <div>
+                                            <strong>Poin Terisi Cukup</strong>
+                                            <p>Mohon pastikan saldo JKT48 Point Anda sudah terisi cukup.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="notice-item">
-                                    <i class="fa-solid fa-hand-holding-dollar text-gold"></i>
-                                    <div>
-                                        <strong>Bayar Setelah Dapat</strong>
-                                        <p>Biaya jasa joki baru dibayar setelah tiket berhasil diamankan.</p>
+                                    <div class="notice-item">
+                                        <i class="fa-solid fa-hand-holding-dollar text-gold"></i>
+                                        <div>
+                                            <strong>Bayar Setelah Dapat</strong>
+                                            <p>Biaya jasa joki baru dibayar setelah tiket berhasil diamankan.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +252,9 @@
                     let spanClass = "bento-span-2";
                     if (tier.value === "85k") spanClass = "bento-span-1";
                     
-                    card.className = `bento-card ${spanClass} vc-tier-card-${tier.value}`;
+                    const isExpanded = searchKeyword ? "expanded" : "";
+                    card.className = `bento-card ${spanClass} vc-tier-card-${tier.value} ${isExpanded}`;
+                    card.setAttribute("onclick", "toggleCard(this, event)");
                     
                     let gen14Html = "";
                     if (is45kTier && matchGen14) {
@@ -252,17 +267,24 @@
 
                     card.innerHTML = `
                         <div class="bento-card-header vc-header">
-                            <span class="vc-tier-label">Sesi Joki Video Call</span>
-                            <span class="vc-tier-price">${tier.label}</span>
-                        </div>
-                        <div class="vc-member-list ${gridClass}">
-                            ${gen14Html}
-                            ${tierMembers.map(m => `
-                                <div class="vc-member-item">
-                                    <span class="member-name">${m.name}</span>
-                                    <span class="team-tag tag-${m.team.toLowerCase()}">${m.team}</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                <div style="display: flex; flex-direction: column; gap: 0.1rem;">
+                                    <span class="vc-tier-label">Sesi Joki Video Call</span>
+                                    <span class="vc-tier-price">${tier.label}</span>
                                 </div>
-                            `).join("")}
+                                <i class="fa-solid fa-chevron-down bento-chevron"></i>
+                            </div>
+                        </div>
+                        <div class="bento-card-body">
+                            <div class="vc-member-list ${gridClass}">
+                                ${gen14Html}
+                                ${tierMembers.map(m => `
+                                    <div class="vc-member-item">
+                                        <span class="member-name">${m.name}</span>
+                                        <span class="team-tag tag-${m.team.toLowerCase()}">${m.team}</span>
+                                    </div>
+                                `).join("")}
+                            </div>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -271,23 +293,27 @@
                     if (tier.value === "85k" && !searchKeyword) {
                         const vcNotice = document.createElement("div");
                         vcNotice.className = "bento-card bento-span-1 bento-notice-card vc-notice";
+                        vcNotice.setAttribute("onclick", "toggleCard(this, event)");
                         vcNotice.innerHTML = `
                             <div class="bento-card-header">
                                 <span class="team-badge info-badge"><i class="fa-solid fa-video"></i> VC Rules</span>
+                                <i class="fa-solid fa-chevron-down bento-chevron"></i>
                             </div>
-                            <div class="vc-notice-content">
-                                <div class="notice-item-mini">
-                                    <i class="fa-solid fa-clock text-gold"></i>
-                                    <div>
-                                        <strong>Tepat Waktu</strong>
-                                        <p>Harap bersiap sebelum sesi VC dimulai.</p>
+                            <div class="bento-card-body">
+                                <div class="vc-notice-content">
+                                    <div class="notice-item-mini">
+                                        <i class="fa-solid fa-clock text-gold"></i>
+                                        <div>
+                                            <strong>Tepat Waktu</strong>
+                                            <p>Harap bersiap sebelum sesi VC dimulai.</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="notice-item-mini">
-                                    <i class="fa-solid fa-wifi text-gold"></i>
-                                    <div>
-                                        <strong>Koneksi Stabil</strong>
-                                        <p>Pastikan jaringan internet lancar.</p>
+                                    <div class="notice-item-mini">
+                                        <i class="fa-solid fa-wifi text-gold"></i>
+                                        <div>
+                                            <strong>Koneksi Stabil</strong>
+                                            <p>Pastikan jaringan internet lancar.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -319,8 +345,33 @@
             });
         });
 
-        // Init
+        // Card toggle function for mobile accordion
+        window.toggleCard = function(card, event) {
+            // Only trigger accordion collapse on screen sizes <= 768px
+            if (window.innerWidth <= 768) {
+                // If user clicks on interactive links, do not collapse
+                if (event && (event.target.closest("a") || event.target.closest("button"))) {
+                    return;
+                }
+                card.classList.toggle("expanded");
+            }
+        };
+
+        // Init & Setup Controls
         document.addEventListener("DOMContentLoaded", () => {
+            const expandAllBtn = document.getElementById("expandAllBtn");
+            const collapseAllBtn = document.getElementById("collapseAllBtn");
+            
+            if (expandAllBtn) {
+                expandAllBtn.addEventListener("click", () => {
+                    document.querySelectorAll(".bento-card").forEach(c => c.classList.add("expanded"));
+                });
+            }
+            if (collapseAllBtn) {
+                collapseAllBtn.addEventListener("click", () => {
+                    document.querySelectorAll(".bento-card").forEach(c => c.classList.remove("expanded"));
+                });
+            }
             render();
         });
 
