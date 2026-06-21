@@ -68,6 +68,12 @@
             try {
                 // Fetch data via GET using action=getData & pass parameter
                 const response = await fetch(`${GOOGLE_SHEET_SCRIPT_URL}?action=getData&pass=${encodeURIComponent(token)}`);
+                
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || `HTTP error! status: ${response.status}`);
+                }
+                
                 const result = await response.json();
 
                 if (result.result === "success" && result.data) {
@@ -88,7 +94,7 @@
                     document.getElementById("loginError").style.display = 'block';
                     document.getElementById("loginError").textContent = "Kata sandi salah! Akses ditolak.";
                 } else {
-                    empty.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color: var(--warning-red);"></i><p>Gagal memuat data dari spreadsheet.<br><small style="color: var(--text-muted); font-size: 0.8rem;">Pastikan Apps Script telah di-deploy ulang dan URL benar.</small></p>`;
+                    empty.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color: var(--warning-red);"></i><p>Gagal memuat data dari spreadsheet.<br><small style="color: var(--text-muted); font-size: 0.8rem;">Detail: ${error.message}</small></p>`;
                     empty.style.display = "block";
                 }
             }
