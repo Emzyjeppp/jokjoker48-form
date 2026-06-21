@@ -73,7 +73,7 @@ const memberPricelist = [
 
 // Configuration
 const WA_ADMIN_NUMBER = "6282251090558"; // Ganti dengan nomor WhatsApp Admin tujuan
-const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUSURtPJzojazKVl3DqVE6D4WRYNDqd9P00gHyoH-7JkI7Y3z0FyDQO05sHFqN3wFWgA/exec"; // Tempelkan URL Google Apps Script Web App Anda di sini (contoh: https://script.google.com/macros/s/.../exec)
+const GOOGLE_SHEET_SCRIPT_URL = "/api/proxy"; // Pointing to local Vercel serverless function proxy
 
 // DOM Elements
 const agreeCheckbox = document.getElementById("agreeCheckbox");
@@ -1021,7 +1021,6 @@ async function submitToGoogleSheet() {
     try {
         await fetch(GOOGLE_SHEET_SCRIPT_URL, {
             method: "POST",
-            mode: "no-cors",
             headers: {
                 "Content-Type": "application/json"
             },

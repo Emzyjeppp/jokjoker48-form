@@ -110,7 +110,7 @@
         // Render 2-Shot and MnG lists (grouped by Team)
         function renderTeamBased(priceField) {
             const grid = document.createElement("div");
-            grid.className = "twoshot-price-grid";
+            grid.className = "bento-grid";
             
             const teams = ["Love", "Dream", "Passion", "Trainee"];
             let hasGlobalMatch = false;
@@ -124,12 +124,19 @@
                     hasGlobalMatch = true;
                     
                     const card = document.createElement("div");
-                    card.className = "team-table-card";
+                    const isTrainee = team === "Trainee";
+                    
+                    card.className = `bento-card ${isTrainee ? 'bento-span-4' : 'bento-span-2'} team-card-${team.toLowerCase()}`;
+                    
+                    // Inside member lists, let's use subgrids
+                    const colsClass = isTrainee ? 'cols-3' : 'cols-2';
+                    
                     card.innerHTML = `
-                        <div class="team-table-header">
-                            <span>Team ${team}</span>
+                        <div class="bento-card-header">
+                            <span class="team-badge team-${team.toLowerCase()}">Team ${team}</span>
+                            <span class="member-count">${members.length} Members</span>
                         </div>
-                        <div class="team-table-rows">
+                        <div class="bento-member-grid ${colsClass}">
                             ${members.map(m => `
                                 <div class="table-row">
                                     <span class="member-name">${m.name}</span>
@@ -139,6 +146,41 @@
                         </div>
                     `;
                     grid.appendChild(card);
+                    
+                    // If we just rendered Passion, and there is no search filter, let's append the Notice Card
+                    if (team === "Passion" && !searchKeyword) {
+                        const noticeCard = document.createElement("div");
+                        noticeCard.className = "bento-card bento-span-2 bento-notice-card";
+                        noticeCard.innerHTML = `
+                            <div class="bento-card-header">
+                                <span class="team-badge info-badge"><i class="fa-solid fa-circle-info"></i> Petunjuk Layanan</span>
+                            </div>
+                            <div class="bento-notice-content">
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-shield-halved text-gold"></i>
+                                    <div>
+                                        <strong>100% Keamanan Akun</strong>
+                                        <p>Kredensial JKT48 ter-enkripsi aman dan wajib logout saat war.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-wallet text-gold"></i>
+                                    <div>
+                                        <strong>Poin Terisi Cukup</strong>
+                                        <p>Mohon pastikan saldo JKT48 Point Anda sudah terisi cukup.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-hand-holding-dollar text-gold"></i>
+                                    <div>
+                                        <strong>Bayar Setelah Dapat</strong>
+                                        <p>Biaya jasa joki baru dibayar setelah tiket berhasil diamankan.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(noticeCard);
+                    }
                 }
             });
 
@@ -152,7 +194,7 @@
         // Render Videocall price tiers (grouped by price Rp40K, Rp45K, Rp70K, Rp85K)
         function renderVcTiers() {
             const grid = document.createElement("div");
-            grid.className = "vc-price-grid";
+            grid.className = "bento-grid";
             
             // Definisikan Tiers
             const tiers = [
@@ -166,12 +208,12 @@
             let allMembers = [];
             for (let team in memberData) {
                 memberData[team].forEach(m => {
-                    allMembers.push({ name: m.name, vcTier: m.vcTier });
+                    allMembers.push({ name: m.name, vcTier: m.vcTier, team: team });
                 });
             }
             // Tambahkan member extra videocall
             vcExtraMembers.forEach(m => {
-                allMembers.push(m);
+                allMembers.push({ name: m.name, vcTier: m.vcTier, team: "Extra" });
             });
 
             // Filter berdasar search
@@ -192,26 +234,66 @@
                     hasGlobalMatch = true;
                     
                     const card = document.createElement("div");
-                    card.className = "vc-tier-card";
+                    
+                    // Set Bento classes
+                    let spanClass = "bento-span-2";
+                    if (tier.value === "85k") spanClass = "bento-span-1";
+                    
+                    card.className = `bento-card ${spanClass} vc-tier-card-${tier.value}`;
                     
                     let gen14Html = "";
                     if (is45kTier && matchGen14) {
-                        gen14Html = `<div class="vc-member-item" style="font-weight: 700; color: var(--color-gold);">ALL GEN 14</div>`;
+                        gen14Html = `<div class="vc-member-item special-gen14"><span class="member-name">ALL GEN 14</span><span class="team-tag tag-trainee">Gen 14</span></div>`;
                     }
 
+                    // For large groups, let's use a 2-column layout inside the card
+                    const isLargeGroup = tierMembers.length > 10;
+                    const gridClass = isLargeGroup ? 'vc-member-list-grid' : 'vc-member-list-single';
+
                     card.innerHTML = `
-                        <div class="vc-tier-header">
-                            <span class="vc-tier-label">Biaya Joki</span>
+                        <div class="bento-card-header vc-header">
+                            <span class="vc-tier-label">Sesi Joki Video Call</span>
                             <span class="vc-tier-price">${tier.label}</span>
                         </div>
-                        <div class="vc-member-list">
+                        <div class="vc-member-list ${gridClass}">
                             ${gen14Html}
                             ${tierMembers.map(m => `
-                                <div class="vc-member-item">${m.name}</div>
+                                <div class="vc-member-item">
+                                    <span class="member-name">${m.name}</span>
+                                    <span class="team-tag tag-${m.team.toLowerCase()}">${m.team}</span>
+                                </div>
                             `).join("")}
                         </div>
                     `;
                     grid.appendChild(card);
+                    
+                    // If we just rendered Tier 85k, and there is no search filter, let's append the VC notice card (span-1)
+                    if (tier.value === "85k" && !searchKeyword) {
+                        const vcNotice = document.createElement("div");
+                        vcNotice.className = "bento-card bento-span-1 bento-notice-card vc-notice";
+                        vcNotice.innerHTML = `
+                            <div class="bento-card-header">
+                                <span class="team-badge info-badge"><i class="fa-solid fa-video"></i> VC Rules</span>
+                            </div>
+                            <div class="vc-notice-content">
+                                <div class="notice-item-mini">
+                                    <i class="fa-solid fa-clock text-gold"></i>
+                                    <div>
+                                        <strong>Tepat Waktu</strong>
+                                        <p>Harap bersiap sebelum sesi VC dimulai.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item-mini">
+                                    <i class="fa-solid fa-wifi text-gold"></i>
+                                    <div>
+                                        <strong>Koneksi Stabil</strong>
+                                        <p>Pastikan jaringan internet lancar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(vcNotice);
+                    }
                 }
             });
 

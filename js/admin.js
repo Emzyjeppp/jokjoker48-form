@@ -1,5 +1,5 @@
 // CONFIGURATION
-        const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUSURtPJzojazKVl3DqVE6D4WRYNDqd9P00gHyoH-7JkI7Y3z0FyDQO05sHFqN3wFWgA/exec";
+        const GOOGLE_SHEET_SCRIPT_URL = "/api/proxy";
 
         // Local State
         let allBookings = []; // Raw parsed list of all bookings
@@ -499,7 +499,6 @@ _(Pembayaran dilakukan setelah tiket didapatkan)_`;
             try {
                 await fetch(url, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: {
                         "Content-Type": "application/json"
                     },

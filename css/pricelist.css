@@ -1,255 +1,537 @@
 /* Specific layout styles for Pricelist page */
-        .pricelist-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .pricelist-tab-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .pricelist-tab-btn:hover {
-            border-color: var(--color-gold);
-            color: var(--color-gold);
-        }
-        
-        .pricelist-tab-btn.active {
-            background: var(--color-gold);
-            color: #0a0a0a;
-            border-color: var(--color-gold);
-        }
-        
-        .search-container {
-            max-width: 500px;
-            margin: 0 auto 2.5rem auto;
-            position: relative;
-        }
-        
-        .search-container input {
-            width: 100%;
-            padding: 1rem 1.5rem 1rem 3rem;
-            background: #121212;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
-        
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--color-gold);
-            background: #080808;
-        }
-        
-        .search-container i {
-            position: absolute;
-            left: 1.25rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-        
-        .pricelist-section-title {
-            text-align: center;
-            font-family: var(--font-heading);
-            color: var(--color-gold);
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
-        }
 
-        .twoshot-price-grid, .mng-price-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 576px) {
-            .twoshot-price-grid, .mng-price-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .twoshot-price-grid, .mng-price-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        
-        .team-table-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem 1rem;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .team-table-header {
-            font-family: var(--font-heading);
-            color: var(--color-gold);
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            letter-spacing: 1px;
-        }
-        
-        .table-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.65rem 0;
-            border-bottom: 1px solid rgba(139, 90, 43, 0.05);
-            font-size: 0.95rem;
-        }
-        
-        .table-row:last-child {
-            border-bottom: none;
-        }
-        
-        .member-name {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        
-        .member-price {
-            font-weight: 700;
-            color: var(--color-gold);
-        }
-        
-        .member-price.unknown {
-            color: var(--text-muted);
-            font-style: italic;
-        }
+/* Background Glow Effects */
+.glow-bg {
+    display: block;
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(214, 175, 55, 0.04) 0%, rgba(214, 175, 55, 0) 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: -1;
+    animation: floatGlow 20s infinite alternate ease-in-out;
+}
+.glow-1 {
+    top: -15%;
+    left: -10%;
+}
+.glow-2 {
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -10s;
+}
 
-        /* Videocall Specific Grid */
-        .vc-price-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .vc-tier-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .vc-tier-header {
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        
-        .vc-tier-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        
-        .vc-tier-price {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--color-gold);
-        }
-        
-        .vc-member-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-        
-        .vc-member-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .vc-member-list::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 10px;
-        }
-        
-        .vc-member-item {
-            padding: 0.5rem 0.75rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.01);
-        }
-        
-        .back-nav {
-            text-align: center;
-            margin-top: 3rem;
-        }
-        
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--color-gold);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.2s;
-        }
-        
-        .btn-back:hover {
-            background: var(--color-gold);
-            color: #0a0a0a;
-            border-color: var(--color-gold);
-        }
+@keyframes floatGlow {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(80px, 40px) scale(1.1);
+    }
+}
 
-        .no-results {
-            text-align: center;
-            color: var(--text-muted);
-            grid-column: 1 / -1;
-            padding: 3rem;
-            font-size: 1.1rem;
-        }
+/* Tabs Navigation Styling */
+.pricelist-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
 
-        @media (max-width: 576px) {
-            .pricelist-section-title {
-                font-size: 1.4rem;
-            }
-            .vc-price-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .vc-tier-card {
-                padding: 1.25rem 1rem;
-            }
-        }
+.pricelist-tab-btn {
+    background: rgba(23, 23, 23, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.8rem 1.6rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.pricelist-tab-btn:hover {
+    border-color: rgba(214, 175, 55, 0.4);
+    color: var(--color-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 175, 55, 0.05);
+}
+
+.pricelist-tab-btn.active {
+    background: var(--color-gold);
+    color: #0a0a0a;
+    border-color: var(--color-gold);
+    box-shadow: 0 4px 20px rgba(214, 175, 55, 0.2);
+}
+
+/* Universal Search Styling */
+.search-container {
+    max-width: 500px;
+    margin: 0 auto 3rem auto;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+    background: rgba(18, 18, 18, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    background: rgba(8, 8, 8, 0.8);
+    box-shadow: 0 0 20px rgba(214, 175, 55, 0.1);
+}
+
+.search-container i {
+    position: absolute;
+    left: 1.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.search-container input:focus + i {
+    color: var(--color-gold);
+}
+
+/* Bento Grid Architecture */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Bento Cards Styling */
+.bento-card {
+    background: rgba(23, 23, 23, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 16px;
+    padding: 1.8rem;
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.bento-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+/* Bento Span Definitions */
+.bento-span-1 {
+    grid-column: span 1;
+}
+
+.bento-span-2 {
+    grid-column: span 2;
+}
+
+.bento-span-4 {
+    grid-column: span 4;
+}
+
+/* Bento Headers */
+.bento-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-badge {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.team-love { color: #f43f5e; }      /* Coral Pink */
+.team-dream { color: #3b82f6; }     /* Royal Blue */
+.team-passion { color: #eab308; }   /* Vibrant Yellow */
+.team-trainee { color: #a855f7; }   /* Trainee Purple */
+.info-badge { color: var(--color-gold); display: flex; align-items: center; gap: 0.5rem; }
+
+.member-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Bento Member Grids */
+.bento-member-grid {
+    display: grid;
+    gap: 0.25rem 1.5rem;
+}
+
+.bento-member-grid.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.bento-member-grid.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Table Rows for Members */
+.table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.table-row:hover {
+    background: rgba(212, 175, 55, 0.06);
+    transform: translateX(4px);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.member-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.member-price {
+    font-weight: 700;
+    color: var(--color-gold);
+    font-size: 0.95rem;
+}
+
+.member-price.unknown {
+    color: var(--text-muted);
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Bento Notice Card */
+.bento-notice-card {
+    background: linear-gradient(135deg, rgba(23, 23, 23, 0.7) 0%, rgba(30, 20, 10, 0.3) 100%);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.bento-notice-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.notice-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.notice-item i {
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.notice-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.notice-item p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Video Call Bento Layouts */
+.vc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+
+.vc-tier-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.vc-tier-price {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+}
+
+/* Member Lists in VC */
+.vc-member-list {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 0.3rem;
+}
+
+.vc-member-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.vc-member-list::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.2);
+    border-radius: 4px;
+}
+
+.vc-member-list-single {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.vc-member-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+}
+
+.vc-member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.vc-member-item:hover {
+    background: rgba(212, 175, 55, 0.05);
+    border-color: rgba(212, 175, 55, 0.15);
+}
+
+.vc-member-item.special-gen14 {
+    grid-column: span 2;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.vc-member-item.special-gen14 .member-name {
+    font-weight: 700;
+    color: var(--color-gold);
+}
+
+.team-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tag-love { background: rgba(244, 63, 94, 0.1); color: #f43f5e; }
+.tag-dream { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.tag-passion { background: rgba(234, 179, 8, 0.1); color: #eab308; }
+.tag-trainee { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+.tag-extra { background: rgba(255, 255, 255, 0.06); color: var(--text-secondary); }
+
+/* VC Notice Elements */
+.vc-notice {
+    grid-column: span 1;
+}
+
+.notice-item-mini {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.notice-item-mini:last-child {
+    margin-bottom: 0;
+}
+
+.notice-item-mini i {
+    font-size: 1.1rem;
+    margin-top: 0.15rem;
+}
+
+.notice-item-mini strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    margin-bottom: 0.1rem;
+}
+
+.notice-item-mini p {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+/* Back Navigation styling */
+.back-nav {
+    text-align: center;
+    margin-top: 3.5rem;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(23, 23, 23, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    color: var(--color-gold);
+    padding: 0.9rem 1.8rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-back:hover {
+    background: var(--color-gold);
+    color: #0a0a0a;
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(214, 175, 55, 0.15);
+}
+
+/* No Results Warning */
+.no-results {
+    text-align: center;
+    color: var(--text-muted);
+    grid-column: 1 / -1;
+    padding: 4rem 2rem;
+    font-size: 1.1rem;
+    background: rgba(23, 23, 23, 0.4);
+    border: 1px dashed var(--border-color);
+    border-radius: 16px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+    .bento-member-grid.cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bento-span-4 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-member-grid.cols-2,
+    .bento-member-grid.cols-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .vc-member-list-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .bento-span-1 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .pricelist-tabs {
+        gap: 0.5rem;
+    }
+    
+    .pricelist-tab-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 8px;
+    }
+    
+    .search-container {
+        margin-bottom: 2rem;
+    }
+    
+    .search-container input {
+        padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+        font-size: 0.95rem;
+    }
+    
+    .search-container i {
+        left: 1.1rem;
+    }
+    
+    .bento-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .bento-span-1,
+    .bento-span-2,
+    .bento-span-4 {
+        grid-column: span 1;
+    }
+    
+    .bento-card {
+        padding: 1.25rem 1rem;
+        border-radius: 12px;
+    }
+    
+    .table-row {
+        padding: 0.6rem 0.4rem;
+    }
+    
+    .vc-tier-price {
+        font-size: 1.5rem;
+    }
+    
+    .back-nav {
+        margin-top: 2rem;
+    }
+    
+    .btn-back {
+        padding: 0.75rem 1.4rem;
+        font-size: 0.9rem;
+    }
+}
