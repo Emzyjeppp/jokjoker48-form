@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JokJoker48 - Pricelist Joki JKT48</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        /* Base Variables & Reset from style.css */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --bg-card: #171717;
+            --border-color: #262626;
+            --border-hover: #d4af37;
+            
+            --color-gold: #d4af37;
+            --color-gold-light: #f3e5ab;
+            --color-gold-dark: #aa841c;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --warning-red: #ef4444;
+            
+            --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.25);
+            
+            --font-heading: 'Cinzel', Georgia, serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--color-gold);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--color-gold);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .header-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--color-gold);
+            margin: 1.5rem auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Specific Bento Pricelist CSS */
+        /* Background Glow Effects */
+        .glow-bg {
+            display: block;
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.04) 0%, rgba(214, 175, 55, 0) 70%);
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: -1;
+            animation: floatGlow 20s infinite alternate ease-in-out;
+        }
+        .glow-1 {
+            top: -15%;
+            left: -10%;
+        }
+        .glow-2 {
+            bottom: -15%;
+            right: -10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(80px, 40px) scale(1.1);
+            }
+        }
+
+        /* Tabs Navigation Styling */
+        .pricelist-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .pricelist-tab-btn {
+            background: rgba(23, 23, 23, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.8rem 1.6rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .pricelist-tab-btn:hover {
+            border-color: rgba(214, 175, 55, 0.4);
+            color: var(--color-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(214, 175, 55, 0.05);
+        }
+
+        .pricelist-tab-btn.active {
+            background: var(--color-gold);
+            color: #0a0a0a;
+            border-color: var(--color-gold);
+            box-shadow: 0 4px 20px rgba(214, 175, 55, 0.2);
+        }
+
+        /* Universal Search Styling */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: rgba(8, 8, 8, 0.8);
+            box-shadow: 0 0 20px rgba(214, 175, 55, 0.1);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .search-container input:focus + i {
+            color: var(--color-gold);
+        }
+
+        /* Bento Grid Architecture */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Bento Cards Styling */
+        .bento-card {
+            background: rgba(23, 23, 23, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-card);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        /* Bento Span Definitions */
+        .bento-span-1 {
+            grid-column: span 1;
+        }
+
+        .bento-span-2 {
+            grid-column: span 2;
+        }
+
+        .bento-span-4 {
+            grid-column: span 4;
+        }
+
+        /* Bento Headers */
+        .bento-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-badge {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .team-love { color: #f43f5e; }      /* Coral Pink */
+        .team-dream { color: #3b82f6; }     /* Royal Blue */
+        .team-passion { color: #eab308; }   /* Vibrant Yellow */
+        .team-trainee { color: #a855f7; }   /* Trainee Purple */
+        .info-badge { color: var(--color-gold); display: flex; align-items: center; gap: 0.5rem; }
+
+        .member-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Bento Member Grids */
+        .bento-member-grid {
+            display: grid;
+            gap: 0.25rem 1.5rem;
+        }
+
+        .bento-member-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .bento-member-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Table Rows for Members */
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(212, 175, 55, 0.06);
+            transform: translateX(4px);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .member-name {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .member-price {
+            font-weight: 700;
+            color: var(--color-gold);
+            font-size: 0.95rem;
+        }
+
+        .member-price.unknown {
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* Bento Notice Card */
+        .bento-notice-card {
+            background: linear-gradient(135deg, rgba(23, 23, 23, 0.7) 0%, rgba(30, 20, 10, 0.3) 100%);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .bento-notice-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .notice-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .notice-item i {
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .notice-item strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .notice-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Video Call Bento Layouts */
+        .vc-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3rem;
+        }
+
+        .vc-tier-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .vc-tier-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--color-gold);
+            font-family: var(--font-heading);
+            letter-spacing: 0.5px;
+        }
+
+        /* Member Lists in VC */
+        .vc-member-list {
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 0.3rem;
+        }
+
+        .vc-member-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .vc-member-list::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 4px;
+        }
+
+        .vc-member-list-single {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .vc-member-list-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem;
+        }
+
+        .vc-member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .vc-member-item:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.15);
+        }
+
+        .vc-member-item.special-gen14 {
+            grid-column: span 2;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .vc-member-item.special-gen14 .member-name {
+            font-weight: 700;
+            color: var(--color-gold);
+        }
+
+        .team-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-love { background: rgba(244, 63, 94, 0.1); color: #f43f5e; }
+        .tag-dream { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+        .tag-passion { background: rgba(234, 179, 8, 0.1); color: #eab308; }
+        .tag-trainee { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+        .tag-extra { background: rgba(255, 255, 255, 0.06); color: var(--text-secondary); }
+
+        /* VC Notice Elements */
+        .vc-notice {
+            grid-column: span 1;
+        }
+
+        .notice-item-mini {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .notice-item-mini:last-child {
+            margin-bottom: 0;
+        }
+
+        .notice-item-mini i {
+            font-size: 1.1rem;
+            margin-top: 0.15rem;
+        }
+
+        .notice-item-mini strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .notice-item-mini p {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.3;
+        }
+
+        /* Back Navigation styling */
+        .back-nav {
+            text-align: center;
+            margin-top: 3.5rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(23, 23, 23, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--color-gold);
+            padding: 0.9rem 1.8rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-back:hover {
+            background: var(--color-gold);
+            color: #0a0a0a;
+            border-color: var(--color-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(214, 175, 55, 0.15);
+        }
+
+        /* No Results Warning */
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 4rem 2rem;
+            font-size: 1.1rem;
+            background: rgba(23, 23, 23, 0.4);
+            border: 1px dashed var(--border-color);
+            border-radius: 16px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .bento-member-grid.cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .bento-span-4 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bento-member-grid.cols-2,
+            .bento-member-grid.cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .vc-member-list-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bento-span-1 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .pricelist-tabs {
+                gap: 0.5rem;
+            }
+            
+            .pricelist-tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .search-container {
+                margin-bottom: 2rem;
+            }
+            
+            .search-container input {
+                padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+                font-size: 0.95rem;
+            }
+            
+            .search-container i {
+                left: 1.1rem;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .bento-span-1,
+            .bento-span-2,
+            .bento-span-4 {
+                grid-column: span 1;
+            }
+            
+            .bento-card {
+                padding: 1.25rem 1rem;
+                border-radius: 12px;
+            }
+            
+            .table-row {
+                padding: 0.6rem 0.4rem;
+            }
+            
+            .vc-tier-price {
+                font-size: 1.5rem;
+            }
+            
+            .back-nav {
+                margin-top: 2rem;
+            }
+            
+            .btn-back {
+                padding: 0.75rem 1.4rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header animate-fade-in">
+            <div class="logo-area">
+                <i class="fa-solid fa-mask-joker logo-icon"></i>
+                <h1>JokJoker48</h1>
+            </div>
+            <p class="subtitle">PRICELIST JASA JOKI JKT48</p>
+            <div class="header-divider"></div>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="pricelist-tabs animate-fade-in" style="animation-delay: 0.1s;">
+            <button class="pricelist-tab-btn active" data-tab="twoshot">
+                <i class="fa-solid fa-ticket"></i> Joki 2-Shot
+            </button>
+            <button class="pricelist-tab-btn" data-tab="mng">
+                <i class="fa-solid fa-handshake"></i> Meet & Greet (MnG)
+            </button>
+            <button class="pricelist-tab-btn" data-tab="videocall">
+                <i class="fa-solid fa-video"></i> Video Call (VC)
+            </button>
+        </div>
+
+        <!-- Universal Search Box -->
+        <div class="search-container animate-fade-in" style="animation-delay: 0.15s;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="universalSearch" placeholder="Cari nama member...">
+        </div>
+
+        <!-- Pricelist Content Area -->
+        <div id="pricelistContent" class="animate-fade-in" style="animation-delay: 0.2s;">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+
+        <!-- Call to Action for Buyers -->
+        <div class="back-nav animate-fade-in" style="animation-delay: 0.25s;">
+            <a href="https://x.com/JokJoker48" target="_blank" class="btn-back">
+                <i class="fa-brands fa-x-twitter"></i> Hubungi / Pesan Joki via Twitter @JokJoker48
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // Database lengkap member & harga joki berdasarkan gambar spreadsheet
+        const memberData = {
+            "Love": [
+                { name: "Alya Amanda", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Anindya Ramadhani", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Celine Thefani", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Nayla Suji", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Cathleen Nixie", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Aurellia", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Aurhel Alana", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Cynthia Yaputera", price2s: 75000, priceMng: 30000, vcTier: "40k" },
+                { name: "Fritzy Rosmerian", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Grace Octaviani", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Indah Cahya", price2s: 75000, priceMng: 30000, vcTier: "40k" },
+                { name: "Jazzlyn Trisha", price2s: 75000, priceMng: 30000, vcTier: "40k" },
+                { name: "Michelle Alexandra", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Fiony Alveria", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Hillary Abigail", price2s: 100000, priceMng: 50000, vcTier: "70k" }
+            ],
+            "Dream": [
+                { name: "Helisma Putri", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Gendis Mayranisa", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Jesslyn Elly", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Shabilqis Nalia", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Nina Tutachia", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Febriola Sinambela", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Gabriela Abigail", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Greesella Adhalia", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Gita Sekar Andarini", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Freya Jayawardana", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Marsha Lenathea", price2s: 85000, priceMng: 40000, vcTier: "70k" },
+                { name: "Adeline Wijaya", price2s: 100000, priceMng: 50000, vcTier: "70k" },
+                { name: "Oline Manuel", price2s: 100000, priceMng: 50000, vcTier: "70k" }
+            ],
+            "Passion": [
+                { name: "Dena Natalia", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Desy Natalia", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Lulu Salsabila", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Raisha Syifa", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Ribka Budiman", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Victoria Kimberly", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Michelle Levia", price2s: 75000, priceMng: 30000, vcTier: "40k" },
+                { name: "Cornelia Vanisa", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Jessica Chandra", price2s: 75000, priceMng: 30000, vcTier: "40k" },
+                { name: "Kathrina Irene", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Mutiara Azzahra", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Abigail Rachel", price2s: 100000, priceMng: 50000, vcTier: "85k" },
+                { name: "Angelina Christy", price2s: 100000, priceMng: 50000, vcTier: "70k" },
+                { name: "Catherine Valencia", price2s: 100000, priceMng: 50000, vcTier: "85k" },
+                { name: "Feni Fitriyanti", price2s: null, priceMng: null, vcTier: "40k" }
+            ],
+            "Trainee": [
+                { name: "Astrella Virgiananda", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Aulia Riza", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Bong Aprili", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Hagia Sopia", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Humaira Ramadhani", price2s: 60000, priceMng: 25000, vcTier: "40k" },
+                { name: "Mikaela Kusjanto", price2s: 75000, priceMng: 30000, vcTier: "45k" },
+                { name: "Jemima Evodie", price2s: 85000, priceMng: 40000, vcTier: "45k" },
+                { name: "Jacqueline Immanuela", price2s: 85000, priceMng: 40000, vcTier: "70k" },
+                { name: "Nur Intan", price2s: 85000, priceMng: 40000, vcTier: "70k" },
+                { name: "Afera Thalia", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Carissa Dini", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Christabella Bonita", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Fahira Putri", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Fatimah Azzahra", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Heidi Suyangga", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Maxine Faye", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Putry Jazyta", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Ralyne Van Irwan", price2s: 60000, priceMng: 25000, vcTier: "45k" },
+                { name: "Sona Kalyana", price2s: 60000, priceMng: 25000, vcTier: "45k" }
+            ]
+        };
+
+        // Tambahan data spesifik untuk member yang hanya ada di Videocall
+        const vcExtraMembers = [
+            { name: "Amanda Sukma", vcTier: "40k" },
+            { name: "Chelsea Davina", vcTier: "40k" },
+            { name: "Regina Willian", vcTier: "40k" }
+        ];
+
+        // Active State
+        let currentTab = "twoshot";
+        let searchKeyword = "";
+
+        // Elements
+        const pricelistContent = document.getElementById("pricelistContent");
+        const universalSearch = document.getElementById("universalSearch");
+        const tabButtons = document.querySelectorAll(".pricelist-tab-btn");
+
+        // Format to IDR
+        function formatRupiah(num) {
+            if (num === null) return `<span class="member-price unknown">Tanya Admin</span>`;
+            return `<span class="member-price">Rp ${num.toLocaleString('id-ID')}</span>`;
+        }
+
+        // Render functions
+        function render() {
+            pricelistContent.innerHTML = "";
+            
+            if (currentTab === "twoshot") {
+                renderTeamBased("price2s");
+            } else if (currentTab === "mng") {
+                renderTeamBased("priceMng");
+            } else if (currentTab === "videocall") {
+                renderVcTiers();
+            }
+        }
+
+        // Render 2-Shot and MnG lists (grouped by Team)
+        function renderTeamBased(priceField) {
+            const grid = document.createElement("div");
+            grid.className = "bento-grid";
+            
+            const teams = ["Love", "Dream", "Passion", "Trainee"];
+            let hasGlobalMatch = false;
+
+            teams.forEach(team => {
+                const members = memberData[team].filter(m => 
+                    m.name.toLowerCase().includes(searchKeyword)
+                );
+
+                if (members.length > 0) {
+                    hasGlobalMatch = true;
+                    
+                    const card = document.createElement("div");
+                    const isTrainee = team === "Trainee";
+                    
+                    card.className = `bento-card ${isTrainee ? 'bento-span-4' : 'bento-span-2'} team-card-${team.toLowerCase()}`;
+                    
+                    // Inside member lists, let's use subgrids
+                    const colsClass = isTrainee ? 'cols-3' : 'cols-2';
+                    
+                    card.innerHTML = `
+                        <div class="bento-card-header">
+                            <span class="team-badge team-${team.toLowerCase()}">Team ${team}</span>
+                            <span class="member-count">${members.length} Members</span>
+                        </div>
+                        <div class="bento-member-grid ${colsClass}">
+                            ${members.map(m => `
+                                <div class="table-row">
+                                    <span class="member-name">${m.name}</span>
+                                    ${formatRupiah(m[priceField])}
+                                </div>
+                            `).join("")}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                    
+                    // If we just rendered Passion, and there is no search filter, let's append the Notice Card
+                    if (team === "Passion" && !searchKeyword) {
+                        const noticeCard = document.createElement("div");
+                        noticeCard.className = "bento-card bento-span-2 bento-notice-card";
+                        noticeCard.innerHTML = `
+                            <div class="bento-card-header">
+                                <span class="team-badge info-badge"><i class="fa-solid fa-circle-info"></i> Petunjuk Layanan</span>
+                            </div>
+                            <div class="bento-notice-content">
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-shield-halved text-gold"></i>
+                                    <div>
+                                        <strong>100% Keamanan Akun</strong>
+                                        <p>Kredensial JKT48 ter-enkripsi aman dan wajib logout saat war.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-wallet text-gold"></i>
+                                    <div>
+                                        <strong>Poin Terisi Cukup</strong>
+                                        <p>Mohon pastikan saldo JKT48 Point Anda sudah terisi cukup.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item">
+                                    <i class="fa-solid fa-hand-holding-dollar text-gold"></i>
+                                    <div>
+                                        <strong>Bayar Setelah Dapat</strong>
+                                        <p>Biaya jasa joki baru dibayar setelah tiket berhasil diamankan.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(noticeCard);
+                    }
+                }
+            });
+
+            if (!hasGlobalMatch) {
+                pricelistContent.innerHTML = `<div class="no-results">Member "${universalSearch.value}" tidak ditemukan.</div>`;
+            } else {
+                pricelistContent.appendChild(grid);
+            }
+        }
+
+        // Render Videocall price tiers (grouped by price Rp40K, Rp45K, Rp70K, Rp85K)
+        function renderVcTiers() {
+            const grid = document.createElement("div");
+            grid.className = "bento-grid";
+            
+            // Definisikan Tiers
+            const tiers = [
+                { label: "Rp 40.000", value: "40k" },
+                { label: "Rp 45.000", value: "45k" },
+                { label: "Rp 70.000", value: "70k" },
+                { label: "Rp 85.000", value: "85k" }
+            ];
+
+            // Kumpulkan semua member dari data utama
+            let allMembers = [];
+            for (let team in memberData) {
+                memberData[team].forEach(m => {
+                    allMembers.push({ name: m.name, vcTier: m.vcTier, team: team });
+                });
+            }
+            // Tambahkan member extra videocall
+            vcExtraMembers.forEach(m => {
+                allMembers.push({ name: m.name, vcTier: m.vcTier, team: "Extra" });
+            });
+
+            // Filter berdasar search
+            allMembers = allMembers.filter(m => 
+                m.name.toLowerCase().includes(searchKeyword)
+            );
+
+            let hasGlobalMatch = false;
+
+            tiers.forEach(tier => {
+                const tierMembers = allMembers.filter(m => m.vcTier === tier.value);
+                
+                // Tambahkan ALL GEN 14 ke tier 45k jika mencari "gen" atau mencari kosong
+                const is45kTier = tier.value === "45k";
+                const matchGen14 = "all gen 14".includes(searchKeyword);
+                
+                if (tierMembers.length > 0 || (is45kTier && matchGen14)) {
+                    hasGlobalMatch = true;
+                    
+                    const card = document.createElement("div");
+                    
+                    // Set Bento classes
+                    let spanClass = "bento-span-2";
+                    if (tier.value === "85k") spanClass = "bento-span-1";
+                    
+                    card.className = `bento-card ${spanClass} vc-tier-card-${tier.value}`;
+                    
+                    let gen14Html = "";
+                    if (is45kTier && matchGen14) {
+                        gen14Html = `<div class="vc-member-item special-gen14"><span class="member-name">ALL GEN 14</span><span class="team-tag tag-trainee">Gen 14</span></div>`;
+                    }
+
+                    // For large groups, let's use a 2-column layout inside the card
+                    const isLargeGroup = tierMembers.length > 10;
+                    const gridClass = isLargeGroup ? 'vc-member-list-grid' : 'vc-member-list-single';
+
+                    card.innerHTML = `
+                        <div class="bento-card-header vc-header">
+                            <span class="vc-tier-label">Sesi Joki Video Call</span>
+                            <span class="vc-tier-price">${tier.label}</span>
+                        </div>
+                        <div class="vc-member-list ${gridClass}">
+                            ${gen14Html}
+                            ${tierMembers.map(m => `
+                                <div class="vc-member-item">
+                                    <span class="member-name">${m.name}</span>
+                                    <span class="team-tag tag-${m.team.toLowerCase()}">${m.team}</span>
+                                </div>
+                            `).join("")}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                    
+                    // If we just rendered Tier 85k, and there is no search filter, let's append the VC notice card (span-1)
+                    if (tier.value === "85k" && !searchKeyword) {
+                        const vcNotice = document.createElement("div");
+                        vcNotice.className = "bento-card bento-span-1 bento-notice-card vc-notice";
+                        vcNotice.innerHTML = `
+                            <div class="bento-card-header">
+                                <span class="team-badge info-badge"><i class="fa-solid fa-video"></i> VC Rules</span>
+                            </div>
+                            <div class="vc-notice-content">
+                                <div class="notice-item-mini">
+                                    <i class="fa-solid fa-clock text-gold"></i>
+                                    <div>
+                                        <strong>Tepat Waktu</strong>
+                                        <p>Harap bersiap sebelum sesi VC dimulai.</p>
+                                    </div>
+                                </div>
+                                <div class="notice-item-mini">
+                                    <i class="fa-solid fa-wifi text-gold"></i>
+                                    <div>
+                                        <strong>Koneksi Stabil</strong>
+                                        <p>Pastikan jaringan internet lancar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(vcNotice);
+                    }
+                }
+            });
+
+            if (!hasGlobalMatch) {
+                pricelistContent.innerHTML = `<div class="no-results">Member "${universalSearch.value}" tidak ditemukan.</div>`;
+            } else {
+                pricelistContent.appendChild(grid);
+            }
+        }
+
+        // Set up event listeners
+        universalSearch.addEventListener("input", (e) => {
+            searchKeyword = e.target.value.toLowerCase().trim();
+            render();
+        });
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                tabButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentTab = btn.getAttribute("data-tab");
+                render();
+            });
+        });
+
+        // Init
+        document.addEventListener("DOMContentLoaded", () => {
+            render();
+        });
+
+        // Disable inspection tools (Anti-F12 and Anti-Right Click)
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "F12") {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && ["U", "u", "S", "s"].includes(e.key)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
