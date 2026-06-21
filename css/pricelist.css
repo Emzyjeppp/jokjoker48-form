@@ -291,6 +291,12 @@
     justify-content: center;
 }
 
+.bento-span-4 .bento-notice-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
 .notice-item {
     display: flex;
     gap: 1rem;
@@ -557,6 +563,11 @@
     .bento-card.expanded .bento-chevron {
         transform: rotate(180deg);
         color: var(--color-gold);
+    }
+    
+    .bento-span-4 .bento-notice-content {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
 }
 

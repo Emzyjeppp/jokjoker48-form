@@ -156,10 +156,10 @@
                     `;
                     grid.appendChild(card);
                     
-                    // If we just rendered Passion, and there is no search filter, let's append the Notice Card
-                    if (team === "Passion" && !searchKeyword) {
+                    // If we just rendered Trainee, and there is no search filter, let's append the Notice Card
+                    if (team === "Trainee" && !searchKeyword) {
                         const noticeCard = document.createElement("div");
-                        noticeCard.className = "bento-card bento-span-2 bento-notice-card";
+                        noticeCard.className = "bento-card bento-span-4 bento-notice-card";
                         noticeCard.setAttribute("onclick", "toggleCard(this, event)");
                         noticeCard.innerHTML = `
                             <div class="bento-card-header">
