@@ -1,0 +1,2 @@
+# Block access to .git directory and sensitive files (Git Exposure Protection)
+RedirectMatch 404 /\.(git|env|gitignore|vercel)
